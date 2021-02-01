@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг»
 
 * Студент: [Евгений Ильин](https://up.htmlacademy.ru/javascript/22/user/454233).
-* Наставник: `Неизвестно`.
+* Наставник: [Руслан Бреев](https://htmlacademy.ru/profile/blckwltz).
 
 ---
 
