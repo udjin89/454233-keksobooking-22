@@ -1,5 +1,50 @@
 'use strict'
+
+const COUNT_AD = 10; // количество объявлений
+const MAX_COUNT_PHOTOS = 3;
+const MIN_COUNT_PHOTOS = 0;
+const MAX_PRICE_PER_NIGHT = 1000000;
+const MIN_PRICE_PER_NIGHT = 0;
+const MAX_ROOMS = 100;
+const MIN_ROOMS = 0;
+const MAX_GUESTS = 50;
+const MIN_GUESTS = 0;
+const MAX_X = 35.70000;
+const MIN_X = 35.65000;
+const MAX_Y = 139.80000;
+const MIN_Y = 139.70000;
+
+const TYPE = [
+  'palace',
+  'flat',
+  'house',
+  'bungalow',
+];
+const CHECKIN = [
+  '12:00',
+  '13:00',
+  '14:00',
+];
+const CHECKOUT = [
+  '12:00',
+  '13:00',
+  '14:00',
+];
+const FEATURES = [
+  'wifi',
+  'dishwasher',
+  'parking',
+  'washer',
+  'elevator',
+  'conditioner',
+];
+const PHOTO_BANK = [
+  'http://o0.github.io/assets/images/tokyo/hotel1.jpg',
+  'http://o0.github.io/assets/images/tokyo/hotel2.jpg',
+  'http://o0.github.io/assets/images/tokyo/hotel3.jpg',
+];
 /*  */
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 function getRandomIntInclusive(min, max) {
 
   if (min >= max || min < 0 || max < 0) {
@@ -44,33 +89,6 @@ function getRandomArrayManyElements(array) {
   return randomArray;
 }
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-const COUNT_AD = 10; // количество объявлений
-
-const TYPE = [
-  'palace',
-  'flat',
-  'house',
-  'bungalow',
-];
-const CHECKIN = [
-  '12:00',
-  '13:00',
-  '14:00',
-];
-const CHECKOUT = [
-  '12:00',
-  '13:00',
-  '14:00',
-];
-const FEATURES = [
-  'wifi',
-  'dishwasher',
-  'parking',
-  'washer',
-  'elevator',
-  'conditioner',
-];
-
 const ads = [];
 
 function createAds(count) {
@@ -82,11 +100,11 @@ function createAds(count) {
 }
 
 function createDescriptionAd() {
-  const ad = [];
+  const ad = {};
 
-  ad[0] = createAuthor();
-  ad[2] = createLocation();
-  ad[1] = createOffer();
+  ad.author = createAuthor();
+  ad.location = createLocation();
+  ad.offer = createOffer();
 
   return ad;
 }
@@ -105,10 +123,10 @@ function createOffer() {
 
   offer.title = 'Мое обьявление';
   offer.address = 'координаты';
-  offer.price = getRandomIntInclusive(0, 100000);
+  offer.price = getRandomIntInclusive(MIN_PRICE_PER_NIGHT, MAX_PRICE_PER_NIGHT);
   offer.type = getRandomArrayElement(TYPE);
-  offer.rooms = getRandomIntInclusive(0, 50);
-  offer.guests = getRandomIntInclusive(0, 200);
+  offer.rooms = getRandomIntInclusive(MIN_ROOMS, MAX_ROOMS);
+  offer.guests = getRandomIntInclusive(MIN_GUESTS, MAX_GUESTS);
   offer.checkin = getRandomArrayElement(CHECKIN);
   offer.checkout = getRandomArrayElement(CHECKOUT);
   offer.features = getRandomArrayManyElements(FEATURES);
@@ -120,10 +138,10 @@ function createOffer() {
 
 function createPhotos() {
   const photos = [];
-  const countPhotos = getRandomIntInclusive(0, 50);
+  const countPhotos = getRandomIntInclusive(MIN_COUNT_PHOTOS, MAX_COUNT_PHOTOS);
 
   for (let i = 0; i < countPhotos; i++) {
-    photos[i] = 'http://o0.github.io/assets/images/tokyo/hotel' + (i + 1) + '.jpg';
+    photos[i] = PHOTO_BANK[i];
   }
 
   return photos;
@@ -132,8 +150,8 @@ function createPhotos() {
 function createLocation() {
   const location = {};
 
-  location.x = getRandomFloat(35.65000, 35.70000);
-  location.y = getRandomFloat(139.70000, 139.80000);
+  location.x = getRandomFloat(MIN_X, MAX_X);
+  location.y = getRandomFloat(MIN_Y, MAX_Y);
 
   return location;
 }
