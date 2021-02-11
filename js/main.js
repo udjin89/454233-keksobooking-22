@@ -14,6 +14,8 @@ const MIN_X = 35.65000;
 const MAX_Y = 139.80000;
 const MIN_Y = 139.70000;
 
+let address = '';
+
 const TYPE = [
   'palace',
   'flat',
@@ -122,7 +124,7 @@ function createOffer() {
   const offer = {};
 
   offer.title = 'Мое обьявление';
-  offer.address = 'координаты';
+  offer.address = address;
   offer.price = getRandomIntInclusive(MIN_PRICE_PER_NIGHT, MAX_PRICE_PER_NIGHT);
   offer.type = getRandomArrayElement(TYPE);
   offer.rooms = getRandomIntInclusive(MIN_ROOMS, MAX_ROOMS);
@@ -152,6 +154,8 @@ function createLocation() {
 
   location.x = getRandomFloat(MIN_X, MAX_X);
   location.y = getRandomFloat(MIN_Y, MAX_Y);
+
+  address = '' + location.x + ' - ' + location.y;
 
   return location;
 }
