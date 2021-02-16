@@ -12,7 +12,7 @@ const FEATURES = [
   'elevator',
   'conditioner',
 ];
-console.log('Start generate element');
+// console.log('Start generate element');
 // находим наш шаблон
 const templateCard = document.querySelector('#card').content;
 // записываем сам блок
@@ -46,14 +46,14 @@ function generateElements(arrayElements) {
     const popupFeatures = element.querySelector('.popup__features');
     // console.log(arrayElements[i].offer.features);
     for (let j = 0; j < FEATURES.length; j++) {
+      const deleteFeature = popupFeatures.querySelector('.popup__feature--' + FEATURES[j]);
+      popupFeatures.removeChild(deleteFeature);
 
       const feature = arrayElements[i].offer.features.some((value) => {
         return value === FEATURES[j];
       });
-      if (!feature) {
-        const deleteFeature = popupFeatures.querySelector('.popup__feature--' + FEATURES[j])
-        // console.log(FEATURES[j] + ' -> delete');
-        popupFeatures.removeChild(deleteFeature);
+      if (feature) {
+        popupFeatures.appendChild(deleteFeature);
       }
     }
     // console.log(arrayElements[i].offer.features);
@@ -75,7 +75,7 @@ function generateElements(arrayElements) {
     const popupAvatar = element.querySelector('.popup__avatar');
     popupAvatar.src = arrayElements[i].author.avatar;
 
-    console.log(popupAvatar);
+    // console.log(popupAvatar);
 
     // Добавляем блок в "накопитель"
     fragment.appendChild(element);
