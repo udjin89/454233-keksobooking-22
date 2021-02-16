@@ -55,7 +55,7 @@ function createAds(count) {
     ads[i] = createDescriptionAd();
   }
 
-  // console.log(ads);
+  return ads;
 }
 
 function createDescriptionAd() {
@@ -89,7 +89,7 @@ function createOffer() {
   offer.checkin = getRandomArrayElement(CHECKIN);
   offer.checkout = getRandomArrayElement(CHECKOUT);
   offer.features = getRandomArrayManyElements(FEATURES);
-  offer.description = 'Мое описание';
+  offer.description = 'Мое описание комнаты';
   offer.photos = createPhotos();
   // console.log(offer.features);
   return offer;
