@@ -8,19 +8,14 @@ const TYPE_PRICE = {
 const type = document.querySelector('#type');
 const price = document.querySelector('#price');
 
-type.onchange = function () {
-  // console.log(type.options[type.selectedIndex].value);
-  price.min = TYPE_PRICE[type.options[type.selectedIndex].value];
-  price.placeholder = TYPE_PRICE[type.options[type.selectedIndex].value];
-  // console.log(price.min);
-};
-// function checkPrice() {
+type.addEventListener('change', function () {
+  checkPrice();
+});
 
-// };
-
-// price.onchange = function () {
-//   console.log(' -> ' + price.value);
-// };
+function checkPrice() {
+  price.min = TYPE_PRICE[type.value];
+  price.placeholder = TYPE_PRICE[type.value];
+}
 // console.log(' -> ' + price.value);
 
 // Время заезда и выезда+++++++++++++++++++++++++++++++++++++++++
@@ -28,9 +23,22 @@ type.onchange = function () {
 const timeIn = document.querySelector('#timein');
 const timeOut = document.querySelector('#timeout');
 
-timeIn.onchange = function () {
-  timeOut.value = timeIn.value;
-};
-timeOut.onchange = function () {
-  timeIn.value = timeOut.value;
-};
+
+timeIn.addEventListener('change', function () {
+  // timeOut.value = timeIn.value;
+  // assign(timeOut.value, timeIn.value);
+  // console.log(' -> ' + timeOut.value + '-> ' + timeIn.value);
+  // timeOut.value = timeIn.value;
+  assign(timeOut, timeIn);
+});
+
+timeOut.addEventListener('change', function () {
+  // timeIn.value = timeOut.value;
+  assign(timeIn, timeOut);
+});
+
+function assign(a, b) {
+  a.value = b.value;
+}
+
+export { checkPrice };

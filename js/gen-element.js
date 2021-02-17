@@ -44,18 +44,26 @@ function generateElements(arrayElements) {
     popupTime.textContent = 'Заезд после ' + arrayElements[i].offer.checkin + ' выезд до ' + arrayElements[i].offer.checkout;
 
     const popupFeatures = element.querySelector('.popup__features');
-    // console.log(arrayElements[i].offer.features);
-    for (let j = 0; j < FEATURES.length; j++) {
-      const deleteFeature = popupFeatures.querySelector('.popup__feature--' + FEATURES[j]);
-      popupFeatures.removeChild(deleteFeature);
 
-      const feature = arrayElements[i].offer.features.some((value) => {
-        return value === FEATURES[j];
-      });
-      if (feature) {
-        popupFeatures.appendChild(deleteFeature);
-      }
-    }
+    popupFeatures.innerHTML = '';
+
+    arrayElements[i].offer.features.forEach((feature) => {
+      const featureElement = document.createElement('li');
+
+      featureElement.classList.add('popup__feature', `popup__feature--${feature}`);
+      popupFeatures.appendChild(featureElement);
+    });
+    // for (let j = 0; j < FEATURES.length; j++) {
+    //   const deleteFeature = popupFeatures.querySelector('.popup__feature--' + FEATURES[j]);
+    //   popupFeatures.removeChild(deleteFeature);
+
+    //   const feature = arrayElements[i].offer.features.some((value) => {
+    //     return value === FEATURES[j];
+    //   });
+    //   if (feature) {
+    //     popupFeatures.appendChild(deleteFeature);
+    //   }
+    // }
     // console.log(arrayElements[i].offer.features);
 
     const popupDescription = element.querySelector('.popup__description');
