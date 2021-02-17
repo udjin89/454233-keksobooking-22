@@ -12,7 +12,7 @@ const FEATURES = [
   'elevator',
   'conditioner',
 ];
-console.log('Start generate element');
+// console.log('Start generate element');
 // находим наш шаблон
 const templateCard = document.querySelector('#card').content;
 // записываем сам блок
@@ -44,18 +44,26 @@ function generateElements(arrayElements) {
     popupTime.textContent = 'Заезд после ' + arrayElements[i].offer.checkin + ' выезд до ' + arrayElements[i].offer.checkout;
 
     const popupFeatures = element.querySelector('.popup__features');
-    // console.log(arrayElements[i].offer.features);
-    for (let j = 0; j < FEATURES.length; j++) {
 
-      const feature = arrayElements[i].offer.features.some((value) => {
-        return value === FEATURES[j];
-      });
-      if (!feature) {
-        const deleteFeature = popupFeatures.querySelector('.popup__feature--' + FEATURES[j])
-        // console.log(FEATURES[j] + ' -> delete');
-        popupFeatures.removeChild(deleteFeature);
-      }
-    }
+    popupFeatures.innerHTML = '';
+
+    arrayElements[i].offer.features.forEach((feature) => {
+      const featureElement = document.createElement('li');
+
+      featureElement.classList.add('popup__feature', `popup__feature--${feature}`);
+      popupFeatures.appendChild(featureElement);
+    });
+    // for (let j = 0; j < FEATURES.length; j++) {
+    //   const deleteFeature = popupFeatures.querySelector('.popup__feature--' + FEATURES[j]);
+    //   popupFeatures.removeChild(deleteFeature);
+
+    //   const feature = arrayElements[i].offer.features.some((value) => {
+    //     return value === FEATURES[j];
+    //   });
+    //   if (feature) {
+    //     popupFeatures.appendChild(deleteFeature);
+    //   }
+    // }
     // console.log(arrayElements[i].offer.features);
 
     const popupDescription = element.querySelector('.popup__description');
@@ -75,7 +83,7 @@ function generateElements(arrayElements) {
     const popupAvatar = element.querySelector('.popup__avatar');
     popupAvatar.src = arrayElements[i].author.avatar;
 
-    console.log(popupAvatar);
+    // console.log(popupAvatar);
 
     // Добавляем блок в "накопитель"
     fragment.appendChild(element);
