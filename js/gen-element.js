@@ -53,18 +53,6 @@ function generateElements(arrayElements) {
       featureElement.classList.add('popup__feature', `popup__feature--${feature}`);
       popupFeatures.appendChild(featureElement);
     });
-    // for (let j = 0; j < FEATURES.length; j++) {
-    //   const deleteFeature = popupFeatures.querySelector('.popup__feature--' + FEATURES[j]);
-    //   popupFeatures.removeChild(deleteFeature);
-
-    //   const feature = arrayElements[i].offer.features.some((value) => {
-    //     return value === FEATURES[j];
-    //   });
-    //   if (feature) {
-    //     popupFeatures.appendChild(deleteFeature);
-    //   }
-    // }
-    // console.log(arrayElements[i].offer.features);
 
     const popupDescription = element.querySelector('.popup__description');
     popupDescription.textContent = arrayElements[i].offer.description;
@@ -90,13 +78,10 @@ function generateElements(arrayElements) {
 
   }
   //Вставка данных
-  const mapCanvas = document.querySelector('#map-canvas');
-  mapCanvas.appendChild(fragment);
+  // const mapCanvas = document.querySelector('#map-canvas');
+  // mapCanvas.appendChild(fragment);
+  return fragment;
 }
-
-
-
-
 // console.log(mapCanvas);
 
 // console.log(mapCanvas);

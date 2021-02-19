@@ -1,3 +1,4 @@
+const COORDINATE_PRECISION = 5;
 const TYPE_PRICE = {
   'palace': 10000,
   'flat': 1000,
@@ -40,5 +41,14 @@ timeOut.addEventListener('change', function () {
 function assign(a, b) {
   a.value = b.value;
 }
+// Адрес +++++++++++++++++++++++++++++++++++++++++
 
-export { checkPrice };
+const address = document.querySelector('#address');
+
+function writeLatLng(coordinate) {
+
+  // address.placeholder = coordinate;
+  // address.innerHTML = coordinate;
+  address.textContent = coordinate.lat.toFixed(COORDINATE_PRECISION) + ' - ' + coordinate.lng.toFixed(COORDINATE_PRECISION);
+}
+export { checkPrice, writeLatLng };
