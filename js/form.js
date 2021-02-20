@@ -26,15 +26,10 @@ const timeOut = document.querySelector('#timeout');
 
 
 timeIn.addEventListener('change', function () {
-  // timeOut.value = timeIn.value;
-  // assign(timeOut.value, timeIn.value);
-  // console.log(' -> ' + timeOut.value + '-> ' + timeIn.value);
-  // timeOut.value = timeIn.value;
   assign(timeOut, timeIn);
 });
 
 timeOut.addEventListener('change', function () {
-  // timeIn.value = timeOut.value;
   assign(timeIn, timeOut);
 });
 
@@ -44,11 +39,49 @@ function assign(a, b) {
 // Адрес +++++++++++++++++++++++++++++++++++++++++
 
 const address = document.querySelector('#address');
-
 function writeLatLng(coordinate) {
 
-  // address.placeholder = coordinate;
-  // address.innerHTML = coordinate;
-  address.textContent = coordinate.lat.toFixed(COORDINATE_PRECISION) + ' - ' + coordinate.lng.toFixed(COORDINATE_PRECISION);
+  address.value = coordinate.lat.toFixed(COORDINATE_PRECISION) + ' - ' + coordinate.lng.toFixed(COORDINATE_PRECISION);
 }
+
+// Количество комнат +++++++++++++++++++++++++++++++++++++++++
+const rooms = document.querySelector('#room_number');
+const capacity = document.querySelector('#capacity');
+
+capacity.addEventListener('input', () => {
+  validationRoom();
+});
+rooms.addEventListener('input', () => {
+  validationRoom();
+});
+
+function validationRoom() {
+  let error = false;
+  if (rooms.value == 1 && capacity.value != 1) {
+    capacity.setCustomValidity('Для одной комнаты подходит только один гость!');
+    error = true;
+  } else if (rooms.value == 2 && capacity.value != 1 && capacity.value != 2) {
+    capacity.setCustomValidity('Для двух комнат подходит только один или два гостя!');
+    error = true;
+  } else if (rooms.value == 3 && capacity.value != 1 && capacity.value != 2 && capacity.value != 3) {
+    capacity.setCustomValidity('Для трех комнат подходит от одного до трех гостей!');
+    error = true;
+  } else if (rooms.value == 100 && capacity.value != 0) {
+    capacity.setCustomValidity('Не подходит для гостей!');
+    error = true;
+  }
+  else capacity.setCustomValidity('');
+
+  capacity.reportValidity();
+  return error;
+}
+// Отправка Формы +++++++++++++++++++++++++++++++++++++++++
+const adForm = document.querySelector('.ad-form');
+adForm.addEventListener('submit', (evt) => {
+  evt.preventDefault();
+  if (!validationRoom()) {
+    adForm.submit();
+  }
+
+});
 export { checkPrice, writeLatLng };
