@@ -6,9 +6,9 @@ import { initMap, generatePin } from './map.js';
 
 const COUNT_AD = 10; // количество объявлений которое нужно сгенерировать
 const ads = createAds(COUNT_AD);
-console.log(ads);
+// console.log(ads);
 const descriptions = generateElements(ads);
-console.log(descriptions);
+// console.log(descriptions);
 checkPrice();
 disactivateState();
 
