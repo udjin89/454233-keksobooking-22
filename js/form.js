@@ -39,6 +39,7 @@ function assign(a, b) {
 // Адрес +++++++++++++++++++++++++++++++++++++++++
 
 const address = document.querySelector('#address');
+
 function writeLatLng(coordinate) {
 
   address.value = coordinate.lat.toFixed(COORDINATE_PRECISION) + ' - ' + coordinate.lng.toFixed(COORDINATE_PRECISION);
@@ -84,4 +85,5 @@ adForm.addEventListener('submit', (evt) => {
   }
 
 });
+
 export { checkPrice, writeLatLng };

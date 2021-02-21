@@ -5,15 +5,12 @@ const mapFilters = mapFilter.querySelectorAll('.map__filter');
 const mapFeature = mapFilter.querySelector('.map__features');
 
 function disactivateState() {
-
   adForm.classList.add('ad-form--disabled');
-
   elements.forEach((currentValue) => {
     disableElement(currentValue);
   });
 
   mapFilter.classList.add('map__filters--disabled');
-
   mapFilters.forEach((currentValue) => {
     disableElement(currentValue);
   });
@@ -28,7 +25,6 @@ function enableElement(element) {
 }
 
 function activateState() {
-
   adForm.classList.remove('ad-form--disabled');
 
   elements.forEach((currentValue) => {
@@ -36,13 +32,10 @@ function activateState() {
   });
 
   mapFilter.classList.remove('map__filters--disabled');
-
   mapFilters.forEach((currentValue) => {
     enableElement(currentValue);
   });
   enableElement(mapFeature);
 }
-
-
 
 export { disactivateState, activateState };

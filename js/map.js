@@ -31,6 +31,7 @@ function initMap() {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     },
   ).addTo(map);
+  
   writeLatLng(COORDINATE_TOKIO);
 
   mainPin.addTo(map);
@@ -50,7 +51,9 @@ const commonIcon = L.icon({
 
 const mainPin = L.marker(
   COORDINATE_TOKIO,
-  {
+  iconSize: [ICON_WIDTH, ICON_HEIGHT],
+  iconAnchor: [ICON_ANCHOR_WIDTH, ICON_ANCHOR_HEIGHT],
+   {
     draggable: true,
     icon: mainIcon,
   },
