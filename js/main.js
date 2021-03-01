@@ -10,8 +10,10 @@ const COUNT_AD = 10; // количество объявлений которое
 // console.log(getData());
 
 disactivateState();
-
-
+checkPrice();
+if (initMap()) {
+  activateState();
+}
 
 getData().then((data) => {
   console.log('input -> ' + data);
@@ -19,17 +21,7 @@ getData().then((data) => {
   const descriptions = generateElements(data);
   if (data) {
     generatePin(data, descriptions);
-    checkPrice();
-    if (initMap()) {
-      activateState();
-    }
     return 0;
-  }
-  else {
-    checkPrice();
-    if (initMap()) {
-      activateState();
-    }
   }
 
 });
