@@ -72,7 +72,7 @@ function generateElements(arrayElements) {
     popupAvatar.src = arrayElements[i].author.avatar;
 
     // console.log(popupAvatar);
-
+    // console.log(element);
     // Добавляем блок в "накопитель"
     fragment.appendChild(element);
 
@@ -80,6 +80,7 @@ function generateElements(arrayElements) {
   //Вставка данных
   // const mapCanvas = document.querySelector('#map-canvas');
   // mapCanvas.appendChild(fragment);
+  console.log(fragment);
   return fragment;
 }
 // console.log(mapCanvas);

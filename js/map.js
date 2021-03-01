@@ -20,7 +20,7 @@ function initMap() {
 
   map = L.map('map-canvas')
     .on('load', () => {
-      console.log('Initializate!!!');
+      // console.log('Initializate!!!');
       state = true;
     })
     .setView(COORDINATE_TOKIO, MAP_ZOOM);
@@ -31,7 +31,7 @@ function initMap() {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     },
   ).addTo(map);
-  
+
   writeLatLng(COORDINATE_TOKIO);
 
   mainPin.addTo(map);
@@ -51,28 +51,25 @@ const commonIcon = L.icon({
 
 const mainPin = L.marker(
   COORDINATE_TOKIO,
-  iconSize: [ICON_WIDTH, ICON_HEIGHT],
-  iconAnchor: [ICON_ANCHOR_WIDTH, ICON_ANCHOR_HEIGHT],
-   {
+  {
     draggable: true,
     icon: mainIcon,
   },
 );
 
 mainPin.on('moveend', (evt) => {
-  console.log(evt.target.getLatLng());
+  // console.log(evt.target.getLatLng());
   writeLatLng(evt.target.getLatLng());
 });
 
 // marker.addTo(map);
 function generatePin(ads, descriptions) {
-  // let j = 0;
   ads.forEach((element, index) => {
-    console.log(element.location.x + ' > ' + element.location.y);
+    // console.log(element.location.x + ' > ' + element.location.y);
     const commonPin = L.marker(
       {
-        lat: element.location.x,
-        lng: element.location.y,
+        lat: element.location.lat,
+        lng: element.location.lng,
       },
       {
         icon: commonIcon,
@@ -81,7 +78,6 @@ function generatePin(ads, descriptions) {
     commonPin.addTo(map);
     const arrayDescription = descriptions.querySelectorAll('.popup');
     commonPin.bindPopup(arrayDescription[index]);
-    // j++;
   });
 }
 export { initMap, generatePin };

@@ -1,3 +1,5 @@
+const ALERT_SHOW_TIME = 3000;
+
 function getRandomIntInclusive(min, max) {
 
   if (min >= max || min < 0 || max < 0) {
@@ -38,4 +40,33 @@ function getRandomArrayManyElements(array) {
   return randomArray;
 }
 
-export { getRandomIntInclusive, getRandomFloat, getRandomArrayElement, getRandomArrayManyElements };
+
+const showAlert = (message) => {
+  const alertContainer = document.createElement('div');
+  alertContainer.style.zIndex = 100;
+  alertContainer.style.position = 'absolute';
+  alertContainer.style.display = 'inline';
+  alertContainer.style.minWidth = '500px';
+  alertContainer.style.width = 'min-content';
+  alertContainer.style.whiteSpace = 'pre-line';
+  alertContainer.style.left = '50%';
+  alertContainer.style.transform = 'translate(-50%, 0)';
+  alertContainer.style.top = '150px';
+  alertContainer.style.right = 0;
+  alertContainer.style.padding = '10px 5px';
+  alertContainer.style.fontSize = '30px';
+  alertContainer.style.textAlign = 'center';
+  alertContainer.style.border = '10px solid red';
+  alertContainer.style.borderRadius = '10px';
+  alertContainer.style.backgroundColor = 'white';
+
+  alertContainer.textContent = message;
+
+  document.body.append(alertContainer);
+
+  setTimeout(() => {
+    alertContainer.remove();
+  }, ALERT_SHOW_TIME);
+}
+
+export { getRandomIntInclusive, getRandomFloat, getRandomArrayElement, getRandomArrayManyElements, showAlert };
