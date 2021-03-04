@@ -80,7 +80,7 @@ function generateElements(arrayElements) {
   //Вставка данных
   // const mapCanvas = document.querySelector('#map-canvas');
   // mapCanvas.appendChild(fragment);
-  console.log(fragment);
+  // console.log(fragment);
   return fragment;
 }
 // console.log(mapCanvas);

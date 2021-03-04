@@ -7,7 +7,6 @@ import { getData } from './get-data.js'
 
 const COUNT_AD = 10; // количество объявлений которое нужно сгенерировать
 // const ads = createAds(COUNT_AD);
-// console.log(getData());
 
 disactivateState();
 checkPrice();
@@ -16,8 +15,6 @@ if (initMap()) {
 }
 
 getData().then((data) => {
-  console.log('input -> ' + data);
-  // try {
   const descriptions = generateElements(data);
   if (data) {
     generatePin(data, descriptions);
@@ -25,14 +22,3 @@ getData().then((data) => {
   }
 
 });
-
-
-
-// const descriptions = generateElements(ads);
-// // console.log(descriptions);
-
-
-
-
-//
-

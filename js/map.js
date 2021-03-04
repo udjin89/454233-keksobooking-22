@@ -9,7 +9,7 @@ const ICON_HEIGHT = 40;
 const ICON_ANCHOR_WIDTH = 20;
 const ICON_ANCHOR_HEIGHT = 40;
 const MAP_ZOOM = 12;
-const COORDINATE_TOKIO = {
+const COORDINATE_INIT = {
   lat: 35.6895000,
   lng: 139.6917100,
 };
@@ -23,7 +23,7 @@ function initMap() {
       // console.log('Initializate!!!');
       state = true;
     })
-    .setView(COORDINATE_TOKIO, MAP_ZOOM);
+    .setView(COORDINATE_INIT, MAP_ZOOM);
 
   L.tileLayer(
     'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -32,7 +32,7 @@ function initMap() {
     },
   ).addTo(map);
 
-  writeLatLng(COORDINATE_TOKIO);
+  writeLatLng(COORDINATE_INIT);
 
   mainPin.addTo(map);
   return state;
@@ -50,7 +50,7 @@ const commonIcon = L.icon({
 });
 
 const mainPin = L.marker(
-  COORDINATE_TOKIO,
+  COORDINATE_INIT,
   {
     draggable: true,
     icon: mainIcon,
@@ -80,4 +80,9 @@ function generatePin(ads, descriptions) {
     commonPin.bindPopup(arrayDescription[index]);
   });
 }
-export { initMap, generatePin };
+
+function resetMainPin() {
+  mainPin.setLatLng(COORDINATE_INIT);
+  writeLatLng(COORDINATE_INIT);
+}
+export { initMap, generatePin, COORDINATE_INIT, resetMainPin };

@@ -1,3 +1,7 @@
+import { postData } from './post-data.js'
+import { showAlert, showSuccessMessage, showErrorMessage } from './util.js';
+import { COORDINATE_INIT, resetMainPin } from './map.js';
+
 const COORDINATE_PRECISION = 5;
 const TYPE_PRICE = {
   'palace': 10000,
@@ -66,11 +70,11 @@ rooms.addEventListener('input', () => {
 function validationRoom() {
 
   const result = roomsMap[rooms.value].some((value) => {
-    console.log(value);
-    console.log(capacity.value);
+    // console.log(value);
+    // console.log(capacity.value);
     return value === parseInt(capacity.value, 10);
   });
-  console.log('->' + result);
+  // console.log('->' + result);
   // let  error = false;
   // if (rooms.value == 1 && capacity.value != 1) {
   //   capacity.setCustomValidity('Для одной комнаты подходит только один гость!');
@@ -96,13 +100,33 @@ function validationRoom() {
 }
 // Отправка Формы+++++++++++++++++++++++++++++++++++++++++
 const adForm = document.querySelector('.ad-form');
+const adFormResetButton = adForm.querySelector('.ad-form__reset');
+
 adForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
-  // validationRoom();
+
   if (validationRoom()) {
-    adForm.submit();
+    // adForm.submit();
+
+    const formData = new FormData(evt.target);
+    // console.log(evt.target);
+    // console.log(formData);
+    console.log('send form' + '\n data -> \n' + formData);
+    postData(() => resetForm(), () => onFail(), formData);
   }
 
 });
+// Сброс формы++++++++++++++++++++++++++++++++++++++++++++
+function resetForm() {
+  showAlert('Form send Success \n start reset');
+  showSuccessMessage('Success');
+  adForm.reset();
+  resetMainPin();
+}
+
+function onFail() {
+  showAlert('Form NOT send');
+  showErrorMessage();
+}
 
 export { checkPrice, writeLatLng };

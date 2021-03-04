@@ -43,7 +43,7 @@ function getRandomArrayManyElements(array) {
 
 const showAlert = (message) => {
   const alertContainer = document.createElement('div');
-  alertContainer.style.zIndex = 100;
+  alertContainer.style.zIndex = 1000;
   alertContainer.style.position = 'absolute';
   alertContainer.style.display = 'inline';
   alertContainer.style.minWidth = '500px';
@@ -69,4 +69,60 @@ const showAlert = (message) => {
   }, ALERT_SHOW_TIME);
 }
 
-export { getRandomIntInclusive, getRandomFloat, getRandomArrayElement, getRandomArrayManyElements, showAlert };
+const mainArea = document.querySelector('main');
+
+const templateSuccessMessage = document.querySelector('#success').content;
+const successMessage = templateSuccessMessage.querySelector('.success');
+// Клонируем элемент со всеми "внутренностями"
+const element = successMessage.cloneNode(true);
+const successMessageText = element.querySelector('.success__message');
+
+const templateErrorMessage = document.querySelector('#error').content;
+const errorMessage = templateErrorMessage.querySelector('.error');
+// Клонируем элемент со всеми "внутренностями"
+const errorNode = errorMessage.cloneNode(true);
+const errorMessageText = errorNode.querySelector('.success__message');
+const typeSuccess = 1;
+
+const pushEscKeydown = (type, evt) => {
+  console.log('Type $$$ - > ' + type);
+  if (evt.key === 'Escape' || evt.key === 'Esc') {
+    evt.preventDefault();
+    removeMessage(type);
+  }
+}
+const onClickArea = (evt) => {
+  removeMessage();
+}
+
+function removeMessage(type) {
+  // mainArea.removeChild(element);
+  // mainArea.removeChild(errorNode);
+  console.log('Type - > ' + type);
+  type === 1 ? mainArea.removeChild(element) : mainArea.removeChild(errorNode);
+
+  window.removeEventListener('keydown', pushEscKeydown);
+  window.removeEventListener('click', onClickArea);
+}
+
+function showSuccessMessage(textMessage) {
+
+  element.style.zIndex = 1000;
+  successMessageText.textContent = textMessage;
+  mainArea.appendChild(element);
+
+  window.addEventListener('keydown', pushEscKeydown(typeSuccess));
+  window.addEventListener('click', onClickArea);
+}
+
+function showErrorMessage(textMessage) {
+
+  errorNode.style.zIndex = 1000;
+  successMessageText.textContent = textMessage;
+  mainArea.appendChild(errorNode);
+
+  window.addEventListener('keydown', pushEscKeydown);
+  window.addEventListener('click', onClickArea);
+}
+
+export { getRandomIntInclusive, getRandomFloat, getRandomArrayElement, getRandomArrayManyElements, showAlert, showSuccessMessage, showErrorMessage };
