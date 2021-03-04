@@ -74,45 +74,75 @@ const mainArea = document.querySelector('main');
 const templateSuccessMessage = document.querySelector('#success').content;
 const successMessage = templateSuccessMessage.querySelector('.success');
 // Клонируем элемент со всеми "внутренностями"
-const element = successMessage.cloneNode(true);
-const successMessageText = element.querySelector('.success__message');
+const successNode = successMessage.cloneNode(true);
+const successMessageText = successNode.querySelector('.success__message');
 
 const templateErrorMessage = document.querySelector('#error').content;
 const errorMessage = templateErrorMessage.querySelector('.error');
 // Клонируем элемент со всеми "внутренностями"
 const errorNode = errorMessage.cloneNode(true);
 const errorMessageText = errorNode.querySelector('.success__message');
-const typeSuccess = 1;
+const typeSuccess = 0;
+const typeError = 1;
 
-const pushEscKeydown = (type, evt) => {
-  console.log('Type $$$ - > ' + type);
+const closeSuccess = (evt) => {
+  console.log(evt.type);
+  evt.type === 'keydown' ? pushEscKeydown(evt, successNode, typeSuccess) : onClickArea(evt, successNode, typeSuccess);
+
+}
+
+const closeError = (evt) => {
+  console.log(evt.type);
+  evt.type === 'keydown' ? pushEscKeydown(evt, errorNode, typeError) : onClickArea(evt, errorNode, typeError);
+
+}
+
+const pushEscKeydown = (evt, node, typeMessage) => {
+  console.log('Node $$$ - > ' + node);
+
   if (evt.key === 'Escape' || evt.key === 'Esc') {
     evt.preventDefault();
-    removeMessage(type);
+    console.log('Push ESC');
+    removeMessage(node, typeMessage);
   }
 }
-const onClickArea = (evt) => {
-  removeMessage();
+const onClickArea = (evt, node, typeMessage) => {
+  removeMessage(node, typeMessage);
 }
 
-function removeMessage(type) {
-  // mainArea.removeChild(element);
-  // mainArea.removeChild(errorNode);
-  console.log('Type - > ' + type);
-  type === 1 ? mainArea.removeChild(element) : mainArea.removeChild(errorNode);
-
-  window.removeEventListener('keydown', pushEscKeydown);
-  window.removeEventListener('click', onClickArea);
+function removeMessage(node, typeMessage) {
+  mainArea.removeChild(node);
+  if (typeMessage === 0) {
+    window.removeEventListener('keydown', closeSuccess);
+    window.removeEventListener('click', closeSuccess);
+  }
+  if (typeMessage === 1) {
+    window.removeEventListener('keydown', closeError);
+    window.removeEventListener('click', closeError);
+  }
+  console.log('Delete');
 }
 //--
-function showSuccessMessage(textMessage) {
+function showSuccessMessage(type, textMessage) {
+  console.log('Show message: type-> ' + type + '\n text-> ' + textMessage);
 
-  element.style.zIndex = 1000;
-  successMessageText.textContent = textMessage;
-  mainArea.appendChild(element);
-
-  window.addEventListener('keydown', pushEscKeydown(typeSuccess));
-  window.addEventListener('click', onClickArea);
+  switch (type) {
+    case 'success':
+      successNode.style.zIndex = 1000;
+      if (textMessage) successMessageText.textContent = textMessage;
+      mainArea.appendChild(successNode);
+      window.addEventListener('keydown', closeSuccess);
+      window.addEventListener('click', closeSuccess);
+      break;
+    case 'error':
+      errorNode.style.zIndex = 1000;
+      if (textMessage) errorMessageText.textContent = textMessage;
+      mainArea.appendChild(errorNode);
+      window.addEventListener('keydown', closeError);
+      window.addEventListener('click', closeError);
+      break;
+    default: console.log('Неизвестный тип сообщения!')
+  }
 }
 
 function showErrorMessage(textMessage) {

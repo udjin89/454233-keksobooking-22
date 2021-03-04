@@ -100,7 +100,6 @@ function validationRoom() {
 }
 // Отправка Формы+++++++++++++++++++++++++++++++++++++++++
 const adForm = document.querySelector('.ad-form');
-const adFormResetButton = adForm.querySelector('.ad-form__reset');
 
 adForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
@@ -119,14 +118,35 @@ adForm.addEventListener('submit', (evt) => {
 // Сброс формы++++++++++++++++++++++++++++++++++++++++++++
 function resetForm() {
   showAlert('Form send Success \n start reset');
-  showSuccessMessage('Success');
+  showSuccessMessage('success');
   adForm.reset();
+  checkPrice();
   resetMainPin();
 }
 
 function onFail() {
   showAlert('Form NOT send');
-  showErrorMessage();
+  showSuccessMessage('error');
+  // showErrorMessage();
 }
+// Сброс формы  по кнопке Reset +++++++++++++++++++++++++++++++++++++
+const adFormResetButton = adForm.querySelector('.ad-form__reset');
 
+adFormResetButton.addEventListener('click', (evt) => {
+  evt.preventDefault();
+  console.log('Click RESET');
+  resetMainPin();
+  resetValue();
+}
+);
+
+function resetValue() {
+  type.value = 'flat';
+  price.value = '';
+  checkPrice();
+  rooms.value = 1;
+  capacity.value = 3;
+  timeIn.value = '12:00';
+  timeOut.value = '12:00';
+}
 export { checkPrice, writeLatLng };
