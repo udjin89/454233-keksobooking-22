@@ -104,7 +104,7 @@ function removeMessage(type) {
   window.removeEventListener('keydown', pushEscKeydown);
   window.removeEventListener('click', onClickArea);
 }
-
+//--
 function showSuccessMessage(textMessage) {
 
   element.style.zIndex = 1000;
