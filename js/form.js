@@ -1,5 +1,5 @@
 import { postData } from './post-data.js'
-import { showAlert, showSuccessMessage, showErrorMessage } from './util.js';
+import { showAlert, showMessage } from './util.js';
 import { COORDINATE_INIT, resetMainPin } from './map.js';
 
 const COORDINATE_PRECISION = 5;
@@ -118,7 +118,7 @@ adForm.addEventListener('submit', (evt) => {
 // Сброс формы++++++++++++++++++++++++++++++++++++++++++++
 function resetForm() {
   showAlert('Form send Success \n start reset');
-  showSuccessMessage('success');
+  showMessage('success');
   adForm.reset();
   checkPrice();
   resetMainPin();
@@ -126,8 +126,7 @@ function resetForm() {
 
 function onFail() {
   showAlert('Form NOT send');
-  showSuccessMessage('error');
-  // showErrorMessage();
+  showMessage('error');
 }
 // Сброс формы  по кнопке Reset +++++++++++++++++++++++++++++++++++++
 const adFormResetButton = adForm.querySelector('.ad-form__reset');
@@ -135,18 +134,19 @@ const adFormResetButton = adForm.querySelector('.ad-form__reset');
 adFormResetButton.addEventListener('click', (evt) => {
   evt.preventDefault();
   console.log('Click RESET');
+  adForm.reset();
   resetMainPin();
-  resetValue();
+  // resetValue();
 }
 );
 
-function resetValue() {
-  type.value = 'flat';
-  price.value = '';
-  checkPrice();
-  rooms.value = 1;
-  capacity.value = 3;
-  timeIn.value = '12:00';
-  timeOut.value = '12:00';
-}
+// function resetValue() {
+//   type.value = 'flat';
+//   price.value = '';
+//   checkPrice();
+//   rooms.value = 1;
+//   capacity.value = 3;
+//   timeIn.value = '12:00';
+//   timeOut.value = '12:00';
+// }
 export { checkPrice, writeLatLng };

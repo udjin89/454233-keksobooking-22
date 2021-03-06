@@ -1,6 +1,7 @@
 /* global L:readonly */
 import { activateState } from './state.js';
-import { writeLatLng } from './form.js'
+import { writeLatLng } from './form.js';
+import { generateElements, generateElementPopup } from './gen-element.js';
 
 let map;
 
@@ -64,7 +65,10 @@ mainPin.on('moveend', (evt) => {
 
 // marker.addTo(map);
 function generatePin(ads, descriptions) {
+  // const arrayDescription = descriptions.querySelectorAll('.popup');
+  // console.log(ads);
   ads.forEach((element, index) => {
+    // console.log(element);
     // console.log(element.location.x + ' > ' + element.location.y);
     const commonPin = L.marker(
       {
@@ -76,9 +80,18 @@ function generatePin(ads, descriptions) {
       },
     );
     commonPin.addTo(map);
-    const arrayDescription = descriptions.querySelectorAll('.popup');
-    commonPin.bindPopup(arrayDescription[index]);
+    commonPin.addEventListener('click', () => generateDescriptionPin(element, commonPin));
+    // commonPin.bindPopup('');
   });
+}
+
+function generateDescriptionPin(element, commonPin) {
+  // commonPin.bindPopup(generateElements(element));
+  const pinDescription = generateElementPopup(element);
+  commonPin.bindPopup(pinDescription);
+  // console.log('click element! -> ' + element);
+  // console.log('click element! -> ' + element.offer.title);
+  // console.log('click element! -> ' + generateElementPopup(element));
 }
 
 function resetMainPin() {

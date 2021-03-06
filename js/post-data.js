@@ -2,7 +2,7 @@ import { showAlert } from './util.js'
 
 function postData(onSuccess, onFail, body) {
   fetch(
-    'https://22.javascript.pages.academy/keksobooking1',
+    'https://22.javascript.pages.academy/keksobookingй',
     {
       method: 'POST', // *GET, POST, PUT, DELETE, etc.
       body,

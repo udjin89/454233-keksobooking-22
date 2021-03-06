@@ -1,4 +1,5 @@
 const ALERT_SHOW_TIME = 3000;
+const ALERT_STYLE = 'zIndex: 1000; position: absolute; display: inline; minWidth: 500px; width: min - content; whiteSpace: pre - line; left: 50 % ; transform: translate(-50 %, 0); top: 150px; right: 0; padding: 10px 5px; fontSize: 30px; textAlign: center; border: 10px solid red; borderRadius: 10px; backgroundColor: white; ';
 
 function getRandomIntInclusive(min, max) {
 
@@ -43,23 +44,23 @@ function getRandomArrayManyElements(array) {
 
 const showAlert = (message) => {
   const alertContainer = document.createElement('div');
-  alertContainer.style.zIndex = 1000;
-  alertContainer.style.position = 'absolute';
-  alertContainer.style.display = 'inline';
-  alertContainer.style.minWidth = '500px';
-  alertContainer.style.width = 'min-content';
-  alertContainer.style.whiteSpace = 'pre-line';
-  alertContainer.style.left = '50%';
-  alertContainer.style.transform = 'translate(-50%, 0)';
-  alertContainer.style.top = '150px';
-  alertContainer.style.right = 0;
-  alertContainer.style.padding = '10px 5px';
-  alertContainer.style.fontSize = '30px';
-  alertContainer.style.textAlign = 'center';
-  alertContainer.style.border = '10px solid red';
-  alertContainer.style.borderRadius = '10px';
-  alertContainer.style.backgroundColor = 'white';
-
+  // alertContainer.style.zIndex = 1000;
+  // alertContainer.style.position = 'absolute';
+  // alertContainer.style.display = 'inline';
+  // alertContainer.style.minWidth = '500px';
+  // alertContainer.style.width = 'min-content';
+  // alertContainer.style.whiteSpace = 'pre-line';
+  // alertContainer.style.left = '50%';
+  // alertContainer.style.transform = 'translate(-50%, 0)';
+  // alertContainer.style.top = '150px';
+  // alertContainer.style.right = 0;
+  // alertContainer.style.padding = '10px 5px';
+  // alertContainer.style.fontSize = '30px';
+  // alertContainer.style.textAlign = 'center';
+  // alertContainer.style.border = '10px solid red';
+  // alertContainer.style.borderRadius = '10px';
+  // alertContainer.style.backgroundColor = 'white';
+  alertContainer.style.cssText = ALERT_STYLE;
   alertContainer.textContent = message;
 
   document.body.append(alertContainer);
@@ -82,77 +83,51 @@ const errorMessage = templateErrorMessage.querySelector('.error');
 // Клонируем элемент со всеми "внутренностями"
 const errorNode = errorMessage.cloneNode(true);
 const errorMessageText = errorNode.querySelector('.success__message');
-const typeSuccess = 0;
-const typeError = 1;
 
-const closeSuccess = (evt) => {
-  console.log(evt.type);
-  evt.type === 'keydown' ? pushEscKeydown(evt, successNode, typeSuccess) : onClickArea(evt, successNode, typeSuccess);
+let currentMessage;
 
-}
-
-const closeError = (evt) => {
-  console.log(evt.type);
-  evt.type === 'keydown' ? pushEscKeydown(evt, errorNode, typeError) : onClickArea(evt, errorNode, typeError);
-
-}
-
-const pushEscKeydown = (evt, node, typeMessage) => {
-  console.log('Node $$$ - > ' + node);
-
+function onEscKeydown(evt) {
   if (evt.key === 'Escape' || evt.key === 'Esc') {
     evt.preventDefault();
-    console.log('Push ESC');
-    removeMessage(node, typeMessage);
+    removeMessage();
   }
-}
-const onClickArea = (evt, node, typeMessage) => {
-  removeMessage(node, typeMessage);
 }
 
-function removeMessage(node, typeMessage) {
-  mainArea.removeChild(node);
-  if (typeMessage === 0) {
-    window.removeEventListener('keydown', closeSuccess);
-    window.removeEventListener('click', closeSuccess);
-  }
-  if (typeMessage === 1) {
-    window.removeEventListener('keydown', closeError);
-    window.removeEventListener('click', closeError);
-  }
-  console.log('Delete');
+function onOverlayClick() {
+  removeMessage();
 }
-//--
-function showSuccessMessage(type, textMessage) {
-  console.log('Show message: type-> ' + type + '\n text-> ' + textMessage);
+
+function removeMessage() {
+  currentMessage.remove();
+  window.removeEventListener('keydown', onEscKeydown);
+  window.removeEventListener('click', onOverlayClick);
+  console.log('Удалили обработчики событий и сообщение');
+}
+function showMessage(type, textMessage) {
+  console.log('Show message(function SHOW MESSAGE): type-> ' + type + '\n text-> ' + textMessage);
 
   switch (type) {
     case 'success':
       successNode.style.zIndex = 1000;
       if (textMessage) successMessageText.textContent = textMessage;
-      mainArea.appendChild(successNode);
-      window.addEventListener('keydown', closeSuccess);
-      window.addEventListener('click', closeSuccess);
+      currentMessage = mainArea.appendChild(successNode);
+      // mainArea.appendChild(successNode);
+      window.addEventListener('keydown', onEscKeydown);
+      window.addEventListener('click', onOverlayClick);
+      console.log('Успех! слушаем события');
       break;
     case 'error':
       errorNode.style.zIndex = 1000;
       if (textMessage) errorMessageText.textContent = textMessage;
-      mainArea.appendChild(errorNode);
-      window.addEventListener('keydown', closeError);
-      window.addEventListener('click', closeError);
+      currentMessage = mainArea.appendChild(errorNode);
+      // mainArea.appendChild(errorNode);
+      window.addEventListener('keydown', onEscKeydown);
+      window.addEventListener('click', onOverlayClick);
+      console.log('ошибка отправки! слушаем события');
       break;
     default: console.log('Неизвестный тип сообщения!')
   }
+
 }
 
-function showErrorMessage(textMessage) {
-
-  errorNode.style.zIndex = 1000;
-  successMessageText.textContent = textMessage;
-  mainArea.appendChild(errorNode);
-
-  window.addEventListener('keydown', pushEscKeydown);
-  window.addEventListener('click', onClickArea);
-}
-
-export { getRandomIntInclusive, getRandomFloat, getRandomArrayElement, getRandomArrayManyElements, showAlert, showSuccessMessage, showErrorMessage };
+export { getRandomIntInclusive, getRandomFloat, getRandomArrayElement, getRandomArrayManyElements, showAlert, showMessage };

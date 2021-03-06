@@ -15,10 +15,8 @@ if (initMap()) {
 }
 
 getData().then((data) => {
-  const descriptions = generateElements(data);
-  if (data) {
-    generatePin(data, descriptions);
-    return 0;
-  }
+  // const descriptions = generateElements(data);
+  if (data) generatePin(data);
+
 
 });

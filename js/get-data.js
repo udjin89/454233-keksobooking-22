@@ -2,7 +2,7 @@ import { showAlert } from './util.js'
 
 function getData() {
 
-  return fetch('https://22.javascript.pages.academy/keksobooking/data')
+  return fetch('https://22.javascript.pages.academy/keksobooking/data1')
     .then((response) => {
       // console.log(response.status);
       // console.log(response);
