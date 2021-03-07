@@ -1,6 +1,7 @@
 /* global L:readonly */
 import { activateState } from './state.js';
-import { writeLatLng } from './form.js'
+import { writeLatLng } from './form.js';
+import { generateElements, generateElementPopup } from './gen-element.js';
 
 let map;
 
@@ -9,7 +10,7 @@ const ICON_HEIGHT = 40;
 const ICON_ANCHOR_WIDTH = 20;
 const ICON_ANCHOR_HEIGHT = 40;
 const MAP_ZOOM = 12;
-const COORDINATE_TOKIO = {
+const COORDINATE_INIT = {
   lat: 35.6895000,
   lng: 139.6917100,
 };
@@ -20,10 +21,10 @@ function initMap() {
 
   map = L.map('map-canvas')
     .on('load', () => {
-      console.log('Initializate!!!');
+      // console.log('Initializate!!!');
       state = true;
     })
-    .setView(COORDINATE_TOKIO, MAP_ZOOM);
+    .setView(COORDINATE_INIT, MAP_ZOOM);
 
   L.tileLayer(
     'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -31,8 +32,8 @@ function initMap() {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     },
   ).addTo(map);
-  
-  writeLatLng(COORDINATE_TOKIO);
+
+  writeLatLng(COORDINATE_INIT);
 
   mainPin.addTo(map);
   return state;
@@ -50,38 +51,51 @@ const commonIcon = L.icon({
 });
 
 const mainPin = L.marker(
-  COORDINATE_TOKIO,
-  iconSize: [ICON_WIDTH, ICON_HEIGHT],
-  iconAnchor: [ICON_ANCHOR_WIDTH, ICON_ANCHOR_HEIGHT],
-   {
+  COORDINATE_INIT,
+  {
     draggable: true,
     icon: mainIcon,
   },
 );
 
 mainPin.on('moveend', (evt) => {
-  console.log(evt.target.getLatLng());
+  // console.log(evt.target.getLatLng());
   writeLatLng(evt.target.getLatLng());
 });
 
 // marker.addTo(map);
 function generatePin(ads, descriptions) {
-  // let j = 0;
+  // const arrayDescription = descriptions.querySelectorAll('.popup');
+  // console.log(ads);
   ads.forEach((element, index) => {
-    console.log(element.location.x + ' > ' + element.location.y);
+    // console.log(element);
+    // console.log(element.location.x + ' > ' + element.location.y);
     const commonPin = L.marker(
       {
-        lat: element.location.x,
-        lng: element.location.y,
+        lat: element.location.lat,
+        lng: element.location.lng,
       },
       {
         icon: commonIcon,
       },
     );
     commonPin.addTo(map);
-    const arrayDescription = descriptions.querySelectorAll('.popup');
-    commonPin.bindPopup(arrayDescription[index]);
-    // j++;
+    commonPin.addEventListener('click', () => generateDescriptionPin(element, commonPin));
+    // commonPin.bindPopup('');
   });
 }
-export { initMap, generatePin };
+
+function generateDescriptionPin(element, commonPin) {
+  // commonPin.bindPopup(generateElements(element));
+  const pinDescription = generateElementPopup(element);
+  commonPin.bindPopup(pinDescription);
+  // console.log('click element! -> ' + element);
+  // console.log('click element! -> ' + element.offer.title);
+  // console.log('click element! -> ' + generateElementPopup(element));
+}
+
+function resetMainPin() {
+  mainPin.setLatLng(COORDINATE_INIT);
+  writeLatLng(COORDINATE_INIT);
+}
+export { initMap, generatePin, COORDINATE_INIT, resetMainPin };
