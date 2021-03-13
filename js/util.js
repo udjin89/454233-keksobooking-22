@@ -1,5 +1,5 @@
 const ALERT_SHOW_TIME = 3000;
-const ALERT_STYLE = 'zIndex: 1000; position: absolute; display: inline; minWidth: 500px; width: min - content; whiteSpace: pre - line; left: 50 % ; transform: translate(-50 %, 0); top: 150px; right: 0; padding: 10px 5px; fontSize: 30px; textAlign: center; border: 10px solid red; borderRadius: 10px; backgroundColor: white; ';
+const ALERT_STYLE = 'z-index: 1000; position: absolute; display: inline; min-width: 500px; width: min-content; whitespace: pre-line; left: 50%; transform: translate(-50%, 0); top: 150px; right: 0; padding: 10px 5px; fontSize: 30px; text-align: center; border: 10px solid red; border-radius: 10px; background-color: white; ';
 
 function getRandomIntInclusive(min, max) {
 
