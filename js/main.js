@@ -4,6 +4,7 @@ import { checkPrice } from './form.js';
 import { disactivateState, activateState } from './state.js';
 import { initMap, generatePin } from './map.js';
 import { getData } from './get-data.js'
+import { onFilterMap } from './map-filters.js'
 
 const COUNT_AD = 10; // количество объявлений которое нужно сгенерировать
 // const ads = createAds(COUNT_AD);
@@ -16,7 +17,14 @@ if (initMap()) {
 
 getData().then((data) => {
   // const descriptions = generateElements(data);
-  if (data) generatePin(data);
+  // console.log('DATA ->', data);
 
+  const dataShowMap = data.slice(0, 10);
+
+  // console.log('New DATA ->', dataShowMap);
+
+  if (data) generatePin(dataShowMap);
+
+  onFilterMap(data);
 
 });

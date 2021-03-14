@@ -4,6 +4,7 @@ import { writeLatLng } from './form.js';
 import { generateElements, generateElementPopup } from './gen-element.js';
 
 let map;
+let currentMarkers = [];
 
 const ICON_WIDTH = 40;
 const ICON_HEIGHT = 40;
@@ -67,6 +68,9 @@ mainPin.on('moveend', (evt) => {
 function generatePin(ads, descriptions) {
   // const arrayDescription = descriptions.querySelectorAll('.popup');
   // console.log(ads);
+  // map.eachLayer((layer) => {
+  //   layer.remove();
+  // });
   ads.forEach((element, index) => {
     // console.log(element);
     // console.log(element.location.x + ' > ' + element.location.y);
@@ -79,12 +83,17 @@ function generatePin(ads, descriptions) {
         icon: commonIcon,
       },
     );
+    currentMarkers.push(commonPin);
     commonPin.addTo(map);
     commonPin.addEventListener('click', () => generateDescriptionPin(element, commonPin));
     // commonPin.bindPopup('');
   });
 }
-
+function clearOldPin() {
+  for (let i = 0; i < currentMarkers.length; i++) {
+    map.removeLayer(currentMarkers[i]);
+  }
+}
 function generateDescriptionPin(element, commonPin) {
   // commonPin.bindPopup(generateElements(element));
   const pinDescription = generateElementPopup(element);
@@ -98,4 +107,4 @@ function resetMainPin() {
   mainPin.setLatLng(COORDINATE_INIT);
   writeLatLng(COORDINATE_INIT);
 }
-export { initMap, generatePin, COORDINATE_INIT, resetMainPin };
+export { initMap, generatePin, COORDINATE_INIT, resetMainPin, clearOldPin };
