@@ -45,7 +45,7 @@ const filterRooms = formFilter.querySelector('#housing-rooms');
 const filterGuests = formFilter.querySelector('#housing-guests');
 
 let filtredData = [];
-/*
+
 function onFilterMap(data) {
   mapFiltres.forEach((filter) => {
     filter.addEventListener('input', _.debounce(() => applyFilter(filter, data), RERENDER_DELAY));
@@ -253,91 +253,93 @@ function checkGuests(data) {
   }
   return filtredData;
 }
-*/
+
 //----------------------------
-const filter = {
-  'housing-type': (evt, datum) => {
-    return (evt.target.value === datum.offer.type) || evt.target.value === 'any';
-  },
-  'housing-rooms': (evt, datum) => {
-    return (evt.target.value == datum.offer.rooms) || evt.target.value === 'any';
-  },
-  'housing-price': (evt, datum) => {
-    return evt.target.value === 'any' || (datum.offer.price >= PRICES[filterPrice.value].min && datum.offer.price < PRICES[filterPrice.value].max);
-  },
-  'housing-guests': (evt, datum) => {
-    return (evt.target.value == datum.offer.guests) || evt.target.value === 'any';
-  },
-  'filter-wifi': (evt, datum) => {
-    if (mapFeaturesWifi.checked) {
-      return datum.offer.features.some((value) => {
-        return value === 'wifi';
-      });
-    }
-    else return datum;
-  },
-  'filter-dishwasher': (evt, datum) => {
-    if (mapFeaturesDishwasher.checked) {
-      return datum.offer.features.some((value) => {
-        return value === 'dishwasher';
-      });
-    }
-    else return datum;
-  },
-  'filter-parking': (evt, datum) => {
-    if (mapFeaturesParking.checked) {
-      return datum.offer.features.some((value) => {
-        return value === 'parking';
-      });
-    }
-    else return datum;
-  },
-  'filter-washer': (evt, datum) => {
-    if (mapFeaturesWasher.checked) {
-      return datum.offer.features.some((value) => {
-        return value === 'washer';
-      });
-    }
-    else return datum;
-  },
-  'filter-elevator': (evt, datum) => {
-    if (mapFeaturesElevator.checked) {
-      return datum.offer.features.some((value) => {
-        return value === 'elevator';
-      });
-    }
-    else return datum;
-  },
-  'filter-conditioner': (evt, datum) => {
-    if (mapFeaturesConditioner.checked) {
-      return datum.offer.features.some((value) => {
-        return value === 'conditioner';
-      });
-    }
-    else return datum;
-  },
-};
+// const filter = {
+//   'housing-type': (evt, datum) => {
+//     return (evt.target.value === datum.offer.type) || evt.target.value === 'any';
+//   },
+//   'housing-rooms': (evt, datum) => {
+//     return (evt.target.value == datum.offer.rooms) || evt.target.value === 'any';
+//   },
+//   'housing-price': (evt, datum) => {
+//     return evt.target.value === 'any' || (datum.offer.price >= PRICES[filterPrice.value].min && datum.offer.price < PRICES[filterPrice.value].max);
+//   },
+//   'housing-guests': (evt, datum) => {
+//     return (evt.target.value == datum.offer.guests) || evt.target.value === 'any';
+//   },
+//   'filter-wifi': (evt, datum) => {
+//     if (mapFeaturesWifi.checked) {
+//       return datum.offer.features.some((value) => {
+//         return value === 'wifi';
+//       });
+//     }
+//     else return datum;
+//   },
+//   'filter-dishwasher': (evt, datum) => {
+//     if (mapFeaturesDishwasher.checked) {
+//       return datum.offer.features.some((value) => {
+//         return value === 'dishwasher';
+//       });
+//     }
+//     else return datum;
+//   },
+//   'filter-parking': (evt, datum) => {
+//     if (mapFeaturesParking.checked) {
+//       return datum.offer.features.some((value) => {
+//         return value === 'parking';
+//       });
+//     }
+//     else return datum;
+//   },
+//   'filter-washer': (evt, datum) => {
+//     if (mapFeaturesWasher.checked) {
+//       return datum.offer.features.some((value) => {
+//         return value === 'washer';
+//       });
+//     }
+//     else return datum;
+//   },
+//   'filter-elevator': (evt, datum) => {
+//     if (mapFeaturesElevator.checked) {
+//       return datum.offer.features.some((value) => {
+//         return value === 'elevator';
+//       });
+//     }
+//     else return datum;
+//   },
+//   'filter-conditioner': (evt, datum) => {
+//     if (mapFeaturesConditioner.checked) {
+//       return datum.offer.features.some((value) => {
+//         return value === 'conditioner';
+//       });
+//     }
+//     else return datum;
+//   },
+// };
 
-let filteredData = [];
 
-const filterData = (evt, data, cb) => {
-  for (let i = 0; i < Math.min(data.length, MAX_COUNT_ADS); i++) {
-    if (cb(evt, data[i])) {
-      filteredData.push(data[i]);
-    }
-  }
 
-  return filteredData;
-};
-function onFilterMap(data) {
-  filtersFormElement.addEventListener('change', (evt) => {
-
-    let newPin = filterData(evt, data, filter[evt.target.id]);
-    // Object.keys(filter).forEach((elem) => { newPin = filterData(evt, newPin, filter[elem]); });
-    // filterData(newPin);
-    clearOldPin();
-    generatePin(newPin);
-    // console.log(evt.target.id);
-  });
-}
+// const filterData = (evt, data, cb) => {
+//   let filteredData = [];
+//   console.log('input data-> ' + data);
+//   for (let i = 0; i < Math.min(data.length, MAX_COUNT_ADS); i++) {
+//     if (cb(evt, data[i])) {
+//       filteredData.push(data[i]);
+//     }
+//   }
+//   console.log('output data-> ' + filteredData);
+//   return filteredData;
+// };
+// function onFilterMap(data) {
+//   let newPin = data;
+//   filtersFormElement.addEventListener('change', (evt) => {
+//     newPin = filterData(evt, data, filter[evt.target.id]);
+//     Object.keys(filter).forEach((elem) => { newPin = filterData(evt, newPin, filter[elem]); });
+//     // filterData(newPin);
+//     clearOldPin();
+//     generatePin(newPin);
+//     console.log(evt.target.id);
+//   });
+// }
 export { onFilterMap }
