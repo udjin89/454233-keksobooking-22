@@ -136,9 +136,7 @@ adFormResetButton.addEventListener('click', (evt) => {
   console.log('Click RESET');
   adForm.reset();
   resetMainPin();
-  // resetValue();
-}
-);
+});
 
 // function resetValue() {
 //   type.value = 'flat';
