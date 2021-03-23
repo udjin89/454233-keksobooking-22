@@ -4,15 +4,6 @@ const typeFlat = {
   house: 'Дом',
   palace: 'Дворец',
 };
-const FEATURES = [
-  'wifi',
-  'dishwasher',
-  'parking',
-  'washer',
-  'elevator',
-  'conditioner',
-];
-// console.log('Start generate element');
 // находим наш шаблон
 const templateCard = document.querySelector('#card').content;
 // записываем сам блок
@@ -66,24 +57,18 @@ function generateElements(arrayElements) {
       popupPhotos.appendChild(cloneChild);
       cloneChild.src = arrayElements[i].offer.photos[j];
     }
-    // console.log(popupPhotos);
+
 
     const popupAvatar = element.querySelector('.popup__avatar');
     popupAvatar.src = arrayElements[i].author.avatar;
 
-    // console.log(popupAvatar);
-    // console.log(element);
     // Добавляем блок в "накопитель"
     fragment.appendChild(element);
 
   }
-  //Вставка данных
-  // const mapCanvas = document.querySelector('#map-canvas');
-  // mapCanvas.appendChild(fragment);
-  // console.log(fragment);
   return fragment;
 }
-// console.log(mapCanvas);
+
 
 function generateElementPopup(data) {
   // Клонируем элемент со всеми "внутренностями"
@@ -130,13 +115,10 @@ function generateElementPopup(data) {
     popupPhotos.appendChild(cloneChild);
     cloneChild.src = data.offer.photos[j];
   }
-  // console.log(popupPhotos);
 
   const popupAvatar = element.querySelector('.popup__avatar');
   popupAvatar.src = data.author.avatar;
 
-  // console.log(popupAvatar);
-  // console.log(element);
   // Добавляем блок в "накопитель"
 
   return fragment.appendChild(element);

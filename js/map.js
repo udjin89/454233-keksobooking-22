@@ -1,7 +1,7 @@
 /* global L:readonly */
-import { activateState } from './state.js';
+import './state.js';
 import { writeLatLng } from './form.js';
-import { generateElements, generateElementPopup } from './gen-element.js';
+import { generateElementPopup } from './gen-element.js';
 
 let map;
 let currentMarkers = [];
@@ -22,7 +22,6 @@ function initMap() {
 
   map = L.map('map-canvas')
     .on('load', () => {
-      // console.log('Initializate!!!');
       state = true;
     })
     .setView(COORDINATE_INIT, MAP_ZOOM);
@@ -59,21 +58,14 @@ const mainPin = L.marker(
   },
 );
 
-mainPin.on('moveend', (evt) => {
-  // console.log(evt.target.getLatLng());
+mainPin.on('move', (evt) => {
   writeLatLng(evt.target.getLatLng());
 });
 
-// marker.addTo(map);
-function generatePin(ads, descriptions) {
-  // const arrayDescription = descriptions.querySelectorAll('.popup');
-  // console.log(ads);
-  // map.eachLayer((layer) => {
-  //   layer.remove();
-  // });
-  ads.forEach((element, index) => {
-    // console.log(element);
-    // console.log(element.location.x + ' > ' + element.location.y);
+
+function generatePin(ads) {
+
+  ads.forEach((element) => {
     const commonPin = L.marker(
       {
         lat: element.location.lat,
@@ -86,7 +78,6 @@ function generatePin(ads, descriptions) {
     currentMarkers.push(commonPin);
     commonPin.addTo(map);
     commonPin.addEventListener('click', () => generateDescriptionPin(element, commonPin));
-    // commonPin.bindPopup('');
   });
 }
 function clearOldPin() {
@@ -95,12 +86,8 @@ function clearOldPin() {
   }
 }
 function generateDescriptionPin(element, commonPin) {
-  // commonPin.bindPopup(generateElements(element));
   const pinDescription = generateElementPopup(element);
   commonPin.bindPopup(pinDescription);
-  // console.log('click element! -> ' + element);
-  // console.log('click element! -> ' + element.offer.title);
-  // console.log('click element! -> ' + generateElementPopup(element));
 }
 
 function resetMainPin() {

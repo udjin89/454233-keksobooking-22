@@ -7,8 +7,6 @@ const previewAvatar = document.querySelector('.avatar-image');
 fileChooserAvatar.addEventListener('change', () => {
   const file = fileChooserAvatar.files[0];
   const fileName = file.name.toLowerCase();
-  // console.log(file);
-
 
   const matches = FILE_TYPES.some((string) => {
     return fileName.endsWith(string);
@@ -20,10 +18,6 @@ fileChooserAvatar.addEventListener('change', () => {
     reader.addEventListener('load', () => {
       previewAvatar.src = reader.result; //результат чтения (если оно успешно)
     });
-
-    // reader.addEventListener('error', () => {
-    //   previewAvatar.src = reader.error; //объект ошибки (при неудаче).
-    // });
 
     reader.readAsDataURL(file); // считать данные как base64-кодированный URL.
   }
@@ -49,11 +43,6 @@ fileChooserHouse.addEventListener('change', () => {
       previewHouse.appendChild(image);
       image.src = reader.result; //результат чтения (если оно успешно)
     });
-
-    // reader.addEventListener('error', () => {
-    //   previewAvatar.src = reader.error; //объект ошибки (при неудаче).
-    // });
-
     reader.readAsDataURL(file); // считать данные как base64-кодированный URL.
   }
 });

@@ -18,10 +18,10 @@ function disactivateState() {
 }
 
 function disableElement(element) {
-  element.setAttribute('disabled', 'disabled');
+  element.disabled = true;
 }
 function enableElement(element) {
-  element.removeAttribute('disabled', 'disabled');
+  element.disabled = false;
 }
 
 function activateState() {
