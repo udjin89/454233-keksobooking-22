@@ -2,6 +2,7 @@ import { postData } from './post-data.js'
 import { showAlert, showMessage } from './util.js';
 import { resetMainPin } from './map.js';
 import { resetFilters } from './map-filters.js';
+import { clearImage } from './img-preview.js'
 const COORDINATE_PRECISION = 5;
 const TYPE_PRICE = {
   'palace': 10000,
@@ -100,6 +101,7 @@ function resetForm() {
   showMessage('success');
   adForm.reset();
   checkPrice();
+  clearImage();
   resetMainPin();
 }
 
@@ -109,11 +111,11 @@ function onFail() {
 }
 // Сброс формы  по кнопке Reset +++++++++++++++++++++++++++++++++++++
 const adFormResetButton = adForm.querySelector('.ad-form__reset');
-
 adFormResetButton.addEventListener('click', (evt) => {
   evt.preventDefault();
   adForm.reset();
   resetFilters();
+  clearImage();
   resetMainPin();
 });
 

@@ -52,12 +52,11 @@ function generateElements(arrayElements) {
     const child = popupPhotos.querySelector('.popup__photo');
     popupPhotos.removeChild(child);
 
-    for (let j = 0; j < arrayElements[i].offer.photos.length; j++) {
+    arrayElements[i].offer.photos.forEach((elem) => {
       const cloneChild = child.cloneNode(true);
       popupPhotos.appendChild(cloneChild);
-      cloneChild.src = arrayElements[i].offer.photos[j];
-    }
-
+      cloneChild.src = elem;
+    });
 
     const popupAvatar = element.querySelector('.popup__avatar');
     popupAvatar.src = arrayElements[i].author.avatar;
@@ -110,11 +109,12 @@ function generateElementPopup(data) {
   const child = popupPhotos.querySelector('.popup__photo');
   popupPhotos.removeChild(child);
 
-  for (let j = 0; j < data.offer.photos.length; j++) {
+
+  data.offer.photos.forEach((elem) => {
     const cloneChild = child.cloneNode(true);
     popupPhotos.appendChild(cloneChild);
-    cloneChild.src = data.offer.photos[j];
-  }
+    cloneChild.src = elem;
+  });
 
   const popupAvatar = element.querySelector('.popup__avatar');
   popupAvatar.src = data.author.avatar;

@@ -1,5 +1,7 @@
 /* global _:readonly */
 import './form.js';
+import './img-preview.js';
+import './map.js';
 import { generatePin, clearOldPin } from './map.js';
 
 const MAX_COUNT_ADS = 10;
@@ -37,23 +39,26 @@ const filterPrice = formFilter.querySelector('#housing-price');
 const filterRooms = formFilter.querySelector('#housing-rooms');
 const filterGuests = formFilter.querySelector('#housing-guests');
 
+
 let filtredData = [];
 
 function onFilterMap(data) {
   mapFiltres.forEach((filter) => {
     filter.addEventListener('input', _.debounce(() => applyFilter(filter, data), RERENDER_DELAY));
+
   });
 
   mapFeaturesValue.forEach((filter) => {
     filter.addEventListener('change', _.debounce(() => applyFilter(filter, data), RERENDER_DELAY));
   });
+
 }
 
 function applyFilter(filter, data) {
   filtredData = [];
   filtredData = startFilters(data, filter);
   clearOldPin();
-  generatePin(filtredData)
+  generatePin(filtredData);
 }
 
 function startFilters(data, filter) {

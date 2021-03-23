@@ -81,9 +81,11 @@ function generatePin(ads) {
   });
 }
 function clearOldPin() {
-  for (let i = 0; i < currentMarkers.length; i++) {
-    map.removeLayer(currentMarkers[i]);
-  }
+
+  currentMarkers.forEach((elem) => {
+    map.removeLayer(elem);
+  });
+
 }
 function generateDescriptionPin(element, commonPin) {
   const pinDescription = generateElementPopup(element);

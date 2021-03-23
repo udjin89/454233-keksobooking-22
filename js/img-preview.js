@@ -46,3 +46,11 @@ fileChooserHouse.addEventListener('change', () => {
     reader.readAsDataURL(file); // считать данные как base64-кодированный URL.
   }
 });
+
+function clearImage() {
+  const image = previewHouse.querySelector('img');
+  previewHouse.removeChild(image);
+  previewAvatar.src = 'http://localhost:3000/img/muffin-grey.svg';
+}
+
+export { clearImage }
