@@ -1,16 +1,12 @@
 /* global _:readonly */
-import { checkPrice } from './form.js';
+import './form.js';
+import './img-preview.js';
+import './map.js';
 import { generatePin, clearOldPin } from './map.js';
 
 const MAX_COUNT_ADS = 10;
 const RERENDER_DELAY = 500;
 
-const TYPE_FILTER = {
-  'housing-type': 'type',
-  'housing-price': 'price',
-  'housing-rooms': 'rooms',
-  'housing-guests': 'guests',
-};
 const PRICES = {
 
   'low': {
@@ -26,10 +22,9 @@ const PRICES = {
     'max': Infinity,
   },
 };
-const filtersFormElement = document.querySelector('.map__filters');
+
 const formFilter = document.querySelector('.map__filters-container');
 const mapFiltres = formFilter.querySelectorAll('.map__filter');
-const mapFeatures = formFilter.querySelectorAll('.map__feature');
 //---
 const mapFeaturesWifi = formFilter.querySelector('#filter-wifi');
 const mapFeaturesDishwasher = formFilter.querySelector('#filter-dishwasher');
@@ -44,27 +39,26 @@ const filterPrice = formFilter.querySelector('#housing-price');
 const filterRooms = formFilter.querySelector('#housing-rooms');
 const filterGuests = formFilter.querySelector('#housing-guests');
 
+
 let filtredData = [];
 
 function onFilterMap(data) {
   mapFiltres.forEach((filter) => {
     filter.addEventListener('input', _.debounce(() => applyFilter(filter, data), RERENDER_DELAY));
-    // filter.addEventListener('input', () => applyFilter(filter, data));
+
   });
 
   mapFeaturesValue.forEach((filter) => {
     filter.addEventListener('change', _.debounce(() => applyFilter(filter, data), RERENDER_DELAY));
-    // filter.addEventListener('change', () => applyFilter(filter, data));
   });
+
 }
 
 function applyFilter(filter, data) {
   filtredData = [];
-
   filtredData = startFilters(data, filter);
   clearOldPin();
-  // _.debounce(() => generatePin(filtredData), RERENDER_DELAY);
-  generatePin(filtredData)
+  generatePin(filtredData);
 }
 
 function startFilters(data, filter) {
@@ -76,15 +70,14 @@ function startFilters(data, filter) {
 
   return filtredData;
 }
-function checkFeatures(data, filter) {
+function checkFeatures(data) {
   const ON_FEATURE = mapFeaturesWifi.checked || mapFeaturesDishwasher.checked || mapFeaturesParking.checked || mapFeaturesWasher.checked || mapFeaturesElevator.checked || mapFeaturesConditioner.checked;
-  // console.log(data);
-  console.log(ON_FEATURE);
+
   if (ON_FEATURE) {
     filtredData = checkWifi(checkDishwasher(checkParking(checkWasher(checkElevator(checkConditioner(data))))));
     return filtredData;
   }
-  else return data;
+  return data;
 }
 
 function checkWifi(data) {
@@ -101,7 +94,9 @@ function checkWifi(data) {
     }
     return filtredData;
   }
-  else return data;
+
+  return data;
+
 }
 
 function checkDishwasher(data) {
@@ -118,7 +113,9 @@ function checkDishwasher(data) {
     }
     return filtredData;
   }
-  else return data;
+
+  return data;
+
 }
 function checkParking(data) {
 
@@ -134,7 +131,9 @@ function checkParking(data) {
     }
     return filtredData;
   }
-  else return data;
+
+  return data;
+
 }
 function checkWasher(data) {
 
@@ -150,7 +149,9 @@ function checkWasher(data) {
     }
     return filtredData;
   }
-  else return data;
+
+  return data;
+
 }
 function checkElevator(data) {
   if (mapFeaturesElevator.checked) {
@@ -165,7 +166,9 @@ function checkElevator(data) {
     }
     return filtredData;
   }
-  else return data;
+
+  return data;
+
 }
 function checkConditioner(data) {
   if (mapFeaturesConditioner.checked) {
@@ -180,11 +183,11 @@ function checkConditioner(data) {
     }
     return filtredData;
   }
-  else return data;
+
+  return data;
+
 }
 function checkType(data) {
-  // console.log('_>>>> ' + data[0]);
-  // console.log('_>>>> ' + data.length);
   let count = 0;
   if (filterType.value === 'any') return data;
 
@@ -210,8 +213,6 @@ function checkPrices(data) {
   }
   for (let i = 0; i < data.length; i++) {
 
-    // console.log('->' + PRICES[filterPrice.value].min);
-
     if (data[i].offer.price >= PRICES[filterPrice.value].min && data[i].offer.price < PRICES[filterPrice.value].max) {
       filtredData.push(data[i]);
     }
@@ -227,8 +228,8 @@ function checkRooms(data) {
 
   for (let i = 0; i < data.length; i++) {
 
-    if (data[i].offer.rooms == filterRooms.value) {
-      console.log(data[i].offer.rooms + '  -> ' + filterRooms.value);
+    if (data[i].offer.rooms === Number(filterRooms.value)) {
+
       filtredData.push(data[i]);
       count++;
     }
@@ -245,7 +246,8 @@ function checkGuests(data) {
   if (filterGuests.value === 'any') return data;
 
   for (let i = 0; i < data.length; i++) {
-    if (data[i].offer.guests == filterGuests.value) {
+    if (data[i].offer.guests === Number(filterGuests.value)) {
+
       filtredData.push(data[i]);
       count++;
     }
@@ -254,92 +256,17 @@ function checkGuests(data) {
   return filtredData;
 }
 
-//----------------------------
-// const filter = {
-//   'housing-type': (evt, datum) => {
-//     return (evt.target.value === datum.offer.type) || evt.target.value === 'any';
-//   },
-//   'housing-rooms': (evt, datum) => {
-//     return (evt.target.value == datum.offer.rooms) || evt.target.value === 'any';
-//   },
-//   'housing-price': (evt, datum) => {
-//     return evt.target.value === 'any' || (datum.offer.price >= PRICES[filterPrice.value].min && datum.offer.price < PRICES[filterPrice.value].max);
-//   },
-//   'housing-guests': (evt, datum) => {
-//     return (evt.target.value == datum.offer.guests) || evt.target.value === 'any';
-//   },
-//   'filter-wifi': (evt, datum) => {
-//     if (mapFeaturesWifi.checked) {
-//       return datum.offer.features.some((value) => {
-//         return value === 'wifi';
-//       });
-//     }
-//     else return datum;
-//   },
-//   'filter-dishwasher': (evt, datum) => {
-//     if (mapFeaturesDishwasher.checked) {
-//       return datum.offer.features.some((value) => {
-//         return value === 'dishwasher';
-//       });
-//     }
-//     else return datum;
-//   },
-//   'filter-parking': (evt, datum) => {
-//     if (mapFeaturesParking.checked) {
-//       return datum.offer.features.some((value) => {
-//         return value === 'parking';
-//       });
-//     }
-//     else return datum;
-//   },
-//   'filter-washer': (evt, datum) => {
-//     if (mapFeaturesWasher.checked) {
-//       return datum.offer.features.some((value) => {
-//         return value === 'washer';
-//       });
-//     }
-//     else return datum;
-//   },
-//   'filter-elevator': (evt, datum) => {
-//     if (mapFeaturesElevator.checked) {
-//       return datum.offer.features.some((value) => {
-//         return value === 'elevator';
-//       });
-//     }
-//     else return datum;
-//   },
-//   'filter-conditioner': (evt, datum) => {
-//     if (mapFeaturesConditioner.checked) {
-//       return datum.offer.features.some((value) => {
-//         return value === 'conditioner';
-//       });
-//     }
-//     else return datum;
-//   },
-// };
+function resetFilters() {
 
-
-
-// const filterData = (evt, data, cb) => {
-//   let filteredData = [];
-//   console.log('input data-> ' + data);
-//   for (let i = 0; i < Math.min(data.length, MAX_COUNT_ADS); i++) {
-//     if (cb(evt, data[i])) {
-//       filteredData.push(data[i]);
-//     }
-//   }
-//   console.log('output data-> ' + filteredData);
-//   return filteredData;
-// };
-// function onFilterMap(data) {
-//   let newPin = data;
-//   filtersFormElement.addEventListener('change', (evt) => {
-//     newPin = filterData(evt, data, filter[evt.target.id]);
-//     Object.keys(filter).forEach((elem) => { newPin = filterData(evt, newPin, filter[elem]); });
-//     // filterData(newPin);
-//     clearOldPin();
-//     generatePin(newPin);
-//     console.log(evt.target.id);
-//   });
-// }
-export { onFilterMap }
+  mapFeaturesWifi.checked = false;
+  mapFeaturesDishwasher.checked = false;
+  mapFeaturesParking.checked = false;
+  mapFeaturesWasher.checked = false;
+  mapFeaturesElevator.checked = false;
+  mapFeaturesConditioner.checked = false;
+  filterType.value = 'any';
+  filterPrice.value = 'any';
+  filterRooms.value = 'any';
+  filterGuests.value = 'any';
+}
+export { onFilterMap, resetFilters }

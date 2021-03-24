@@ -18,7 +18,6 @@ function postData(onSuccess, onFail, body) {
     .catch((err) => {
       showAlert(`${err}`);
     });
-};
-
+}
 
 export { postData };

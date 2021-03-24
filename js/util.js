@@ -44,22 +44,6 @@ function getRandomArrayManyElements(array) {
 
 const showAlert = (message) => {
   const alertContainer = document.createElement('div');
-  // alertContainer.style.zIndex = 1000;
-  // alertContainer.style.position = 'absolute';
-  // alertContainer.style.display = 'inline';
-  // alertContainer.style.minWidth = '500px';
-  // alertContainer.style.width = 'min-content';
-  // alertContainer.style.whiteSpace = 'pre-line';
-  // alertContainer.style.left = '50%';
-  // alertContainer.style.transform = 'translate(-50%, 0)';
-  // alertContainer.style.top = '150px';
-  // alertContainer.style.right = 0;
-  // alertContainer.style.padding = '10px 5px';
-  // alertContainer.style.fontSize = '30px';
-  // alertContainer.style.textAlign = 'center';
-  // alertContainer.style.border = '10px solid red';
-  // alertContainer.style.borderRadius = '10px';
-  // alertContainer.style.backgroundColor = 'white';
   alertContainer.style.cssText = ALERT_STYLE;
   alertContainer.textContent = message;
 
@@ -101,31 +85,25 @@ function removeMessage() {
   currentMessage.remove();
   window.removeEventListener('keydown', onEscKeydown);
   window.removeEventListener('click', onOverlayClick);
-  console.log('Удалили обработчики событий и сообщение');
 }
 function showMessage(type, textMessage) {
-  console.log('Show message(function SHOW MESSAGE): type-> ' + type + '\n text-> ' + textMessage);
 
   switch (type) {
     case 'success':
       successNode.style.zIndex = 1000;
       if (textMessage) successMessageText.textContent = textMessage;
       currentMessage = mainArea.appendChild(successNode);
-      // mainArea.appendChild(successNode);
       window.addEventListener('keydown', onEscKeydown);
       window.addEventListener('click', onOverlayClick);
-      console.log('Успех! слушаем события');
       break;
     case 'error':
       errorNode.style.zIndex = 1000;
       if (textMessage) errorMessageText.textContent = textMessage;
       currentMessage = mainArea.appendChild(errorNode);
-      // mainArea.appendChild(errorNode);
       window.addEventListener('keydown', onEscKeydown);
       window.addEventListener('click', onOverlayClick);
-      console.log('ошибка отправки! слушаем события');
       break;
-    default: console.log('Неизвестный тип сообщения!')
+    default: throw new Error('Неизвестный тип сообщения!');
   }
 
 }
