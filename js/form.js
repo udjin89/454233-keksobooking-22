@@ -1,6 +1,6 @@
 import { postData } from './post-data.js'
 import { showAlert, showMessage } from './util.js';
-import { resetMainPin } from './map.js';
+import { resetMainPin, generatePin } from './map.js';
 import { resetFilters } from './map-filters.js';
 import { clearImage } from './img-preview.js'
 const COORDINATE_PRECISION = 5;
@@ -22,14 +22,13 @@ const type = document.querySelector('#type');
 const price = document.querySelector('#price');
 
 type.addEventListener('change', () => {
-  checkPrice();
+  onCheckPrice();
 });
 
-function checkPrice() {
+function onCheckPrice() {
   price.min = TYPE_PRICE[type.value];
   price.placeholder = TYPE_PRICE[type.value];
 }
-// console.log(' -> ' + price.value);
 
 // Время заезда и выезда+++++++++++++++++++++++++++++++++++++++++
 
@@ -38,14 +37,14 @@ const timeOut = document.querySelector('#timeout');
 
 
 timeIn.addEventListener('change', () => {
-  assign(timeOut, timeIn);
+  onTimeAssign(timeOut, timeIn);
 });
 
 timeOut.addEventListener('change', () => {
-  assign(timeIn, timeOut);
+  onTimeAssign(timeIn, timeOut);
 });
 
-function assign(a, b) {
+function onTimeAssign(a, b) {
   a.value = b.value;
 }
 // Адрес +++++++++++++++++++++++++++++++++++++++++
@@ -62,13 +61,13 @@ const rooms = document.querySelector('#room_number');
 const capacity = document.querySelector('#capacity');
 
 capacity.addEventListener('input', () => {
-  validationRoom();
+  onValidationRoom();
 });
 rooms.addEventListener('input', () => {
-  validationRoom();
+  onValidationRoom();
 });
 
-function validationRoom() {
+function onValidationRoom() {
 
   const result = roomsMap[rooms.value].some((value) => {
     return value === parseInt(capacity.value, 10);
@@ -85,24 +84,29 @@ function validationRoom() {
 // Отправка Формы+++++++++++++++++++++++++++++++++++++++++
 const adForm = document.querySelector('.ad-form');
 
-adForm.addEventListener('submit', (evt) => {
-  evt.preventDefault();
+function onSubmitForm(data) {
+  adForm.addEventListener('submit', (evt) => onPost(evt, data));
+}
 
-  if (validationRoom()) {
+function onPost(evt, data) {
+  evt.preventDefault();
+  if (onValidationRoom()) {
 
     const formData = new FormData(evt.target);
-    postData(() => resetForm(), () => onFail(), formData);
+    postData(() => resetForm(data), () => onFail(), formData);
   }
 
-});
+}
 // Сброс формы++++++++++++++++++++++++++++++++++++++++++++
-function resetForm() {
+function resetForm(data) {
   showAlert('Form send Success \n start reset');
   showMessage('success');
   adForm.reset();
-  checkPrice();
+  onCheckPrice();
+  resetFilters();
   clearImage();
   resetMainPin();
+  generatePin(data);
 }
 
 function onFail() {
@@ -111,12 +115,14 @@ function onFail() {
 }
 // Сброс формы  по кнопке Reset +++++++++++++++++++++++++++++++++++++
 const adFormResetButton = adForm.querySelector('.ad-form__reset');
-adFormResetButton.addEventListener('click', (evt) => {
-  evt.preventDefault();
-  adForm.reset();
-  resetFilters();
-  clearImage();
-  resetMainPin();
-});
-
-export { checkPrice, writeLatLng };
+function onResetButton(data) {
+  adFormResetButton.addEventListener('click', (evt) => {
+    evt.preventDefault();
+    adForm.reset();
+    resetFilters();
+    clearImage();
+    resetMainPin();
+    generatePin(data);
+  });
+}
+export { onCheckPrice, writeLatLng, onResetButton, onSubmitForm }

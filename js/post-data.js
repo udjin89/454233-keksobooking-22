@@ -11,9 +11,11 @@ function postData(onSuccess, onFail, body) {
     .then((response) => {
       if (response.ok) {
         onSuccess();
-      } else {
+      }
+      else {
         onFail();
       }
+
     })
     .catch((err) => {
       showAlert(`${err}`);

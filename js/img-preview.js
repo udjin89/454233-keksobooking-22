@@ -49,7 +49,9 @@ fileChooserHouse.addEventListener('change', () => {
 
 function clearImage() {
   const image = previewHouse.querySelector('img');
-  previewHouse.removeChild(image);
+  if (image) {
+    previewHouse.removeChild(image);
+  }
   previewAvatar.src = 'http://localhost:3000/img/muffin-grey.svg';
 }
 

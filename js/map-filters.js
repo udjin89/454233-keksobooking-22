@@ -196,7 +196,9 @@ function checkType(data) {
       filtredData.push(data[i]);
       count++;
     }
-    if (count >= 10) return filtredData;
+    if (count >= MAX_COUNT_ADS) {
+      return filtredData;
+    }
   }
 
   return filtredData;
@@ -233,7 +235,9 @@ function checkRooms(data) {
       filtredData.push(data[i]);
       count++;
     }
-    if (count >= 10) return filtredData;
+    if (count >= MAX_COUNT_ADS) {
+      return filtredData;
+    }
   }
 
   return filtredData;
@@ -251,7 +255,10 @@ function checkGuests(data) {
       filtredData.push(data[i]);
       count++;
     }
-    if (count >= 10) return filtredData;
+    if (count >= MAX_COUNT_ADS) {
+      return filtredData;
+    }
+
   }
   return filtredData;
 }
