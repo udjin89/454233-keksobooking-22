@@ -1,5 +1,5 @@
 import './gen-element.js';
-import { checkPrice } from './form.js';
+import { onCheckPrice, onResetButton, onSubmitForm } from './form.js';
 import { disactivateState, activateState } from './state.js';
 import { initMap, generatePin } from './map.js';
 import { getData } from './get-data.js'
@@ -8,7 +8,7 @@ import './img-preview.js'
 
 
 disactivateState();
-checkPrice();
+onCheckPrice();
 if (initMap()) {
   activateState();
 }
@@ -16,9 +16,9 @@ if (initMap()) {
 getData().then((data) => {
 
   const dataShowMap = data.slice(0, 10);
-
-  if (data) generatePin(dataShowMap);
-
+  generatePin(dataShowMap);
   onFilterMap(data);
+  onSubmitForm(data);
+  onResetButton(data);
 
 });
