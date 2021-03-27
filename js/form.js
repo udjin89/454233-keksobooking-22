@@ -76,7 +76,10 @@ function onValidationRoom() {
   if (!result) {
     capacity.setCustomValidity('Ошибка количества комнат!');
   }
-  else capacity.setCustomValidity('');
+  else
+  {
+    capacity.setCustomValidity('');
+  }
 
   capacity.reportValidity();
   return result;

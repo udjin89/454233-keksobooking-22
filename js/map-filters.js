@@ -189,7 +189,10 @@ function checkConditioner(data) {
 }
 function checkType(data) {
   let count = 0;
-  if (filterType.value === 'any') return data;
+  if (filterType.value === 'any') 
+  {
+    return data;
+  }
 
   for (let i = 0; i < data.length; i++) {
     if (data[i].offer.type === filterType.value) {
@@ -226,7 +229,10 @@ function checkRooms(data) {
   filteredData = [];
   let count = 0;
 
-  if (filterRooms.value === 'any') return data;
+  if (filterRooms.value === 'any') 
+  {
+    return data;
+  }
 
   for (let i = 0; i < data.length; i++) {
 
@@ -247,7 +253,10 @@ function checkGuests(data) {
   filteredData = [];
   let count = 0;
 
-  if (filterGuests.value === 'any') return data;
+  if (filterGuests.value === 'any') 
+  {
+    return data;
+  }
 
   for (let i = 0; i < data.length; i++) {
     if (data[i].offer.guests === Number(filterGuests.value)) {

@@ -49,15 +49,31 @@ function showMessage(type, textMessage) {
 
   switch (type) {
     case 'success':
+<<<<<<< HEAD
       successNode.style.zIndex = '1000';
       if (textMessage) successMessageText.textContent = textMessage;
+=======
+      successNode.style.zIndex = 1000;
+      if (textMessage)
+      {
+        successMessageText.textContent = textMessage;
+      }
+>>>>>>> eba60abc6b0898288176a22ebde9fa5313025985
       currentMessage = mainArea.appendChild(successNode);
       window.addEventListener('keydown', onEscKeydown);
       window.addEventListener('click', onOverlayClick);
       break;
     case 'error':
+<<<<<<< HEAD
       errorNode.style.zIndex = '1000';
       if (textMessage) errorMessageText.textContent = textMessage;
+=======
+      errorNode.style.zIndex = 1000;
+      if (textMessage)
+      {
+        errorMessageText.textContent = textMessage;
+      }
+>>>>>>> eba60abc6b0898288176a22ebde9fa5313025985
       currentMessage = mainArea.appendChild(errorNode);
       window.addEventListener('keydown', onEscKeydown);
       window.addEventListener('click', onOverlayClick);
