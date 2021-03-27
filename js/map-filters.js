@@ -24,7 +24,7 @@ const PRICES = {
 };
 
 const formFilter = document.querySelector('.map__filters-container');
-const mapFiltres = formFilter.querySelectorAll('.map__filter');
+const mapFilters = formFilter.querySelectorAll('.map__filter');
 //---
 const mapFeaturesWifi = formFilter.querySelector('#filter-wifi');
 const mapFeaturesDishwasher = formFilter.querySelector('#filter-dishwasher');
@@ -40,10 +40,10 @@ const filterRooms = formFilter.querySelector('#housing-rooms');
 const filterGuests = formFilter.querySelector('#housing-guests');
 
 
-let filtredData = [];
+let filteredData = [];
 
 function onFilterMap(data) {
-  mapFiltres.forEach((filter) => {
+  mapFilters.forEach((filter) => {
     filter.addEventListener('input', _.debounce(() => applyFilter(filter, data), RERENDER_DELAY));
 
   });
@@ -55,27 +55,27 @@ function onFilterMap(data) {
 }
 
 function applyFilter(filter, data) {
-  filtredData = [];
-  filtredData = startFilters(data, filter);
+  filteredData = [];
+  filteredData = startFilters(data, filter);
   clearOldPin();
-  generatePin(filtredData);
+  generatePin(filteredData);
 }
 
 function startFilters(data, filter) {
-  filtredData = checkType(data);
-  filtredData = checkPrices(filtredData);
-  filtredData = checkRooms(filtredData);
-  filtredData = checkGuests(filtredData);
-  filtredData = checkFeatures(filtredData, filter);
+  filteredData = checkType(data);
+  filteredData = checkPrices(filteredData);
+  filteredData = checkRooms(filteredData);
+  filteredData = checkGuests(filteredData);
+  filteredData = checkFeatures(filteredData, filter);
 
-  return filtredData;
+  return filteredData;
 }
 function checkFeatures(data) {
   const ON_FEATURE = mapFeaturesWifi.checked || mapFeaturesDishwasher.checked || mapFeaturesParking.checked || mapFeaturesWasher.checked || mapFeaturesElevator.checked || mapFeaturesConditioner.checked;
 
   if (ON_FEATURE) {
-    filtredData = checkWifi(checkDishwasher(checkParking(checkWasher(checkElevator(checkConditioner(data))))));
-    return filtredData;
+    filteredData = checkWifi(checkDishwasher(checkParking(checkWasher(checkElevator(checkConditioner(data))))));
+    return filteredData;
   }
   return data;
 }
@@ -83,16 +83,16 @@ function checkFeatures(data) {
 function checkWifi(data) {
 
   if (mapFeaturesWifi.checked) {
-    filtredData = [];
+    filteredData = [];
 
     for (let i = 0; i < Math.min(data.length, MAX_COUNT_ADS); i++) {
       if (data[i].offer.features.some((value) => {
         return value === 'wifi';
       })) {
-        filtredData.push(data[i]);
+        filteredData.push(data[i]);
       }
     }
-    return filtredData;
+    return filteredData;
   }
 
   return data;
@@ -102,16 +102,16 @@ function checkWifi(data) {
 function checkDishwasher(data) {
 
   if (mapFeaturesDishwasher.checked) {
-    filtredData = [];
+    filteredData = [];
 
     for (let i = 0; i < Math.min(data.length, MAX_COUNT_ADS); i++) {
       if (data[i].offer.features.some((value) => {
         return value === 'dishwasher';
       })) {
-        filtredData.push(data[i]);
+        filteredData.push(data[i]);
       }
     }
-    return filtredData;
+    return filteredData;
   }
 
   return data;
@@ -120,16 +120,16 @@ function checkDishwasher(data) {
 function checkParking(data) {
 
   if (mapFeaturesParking.checked) {
-    filtredData = [];
+    filteredData = [];
 
     for (let i = 0; i < Math.min(data.length, MAX_COUNT_ADS); i++) {
       if (data[i].offer.features.some((value) => {
         return value === 'parking';
       })) {
-        filtredData.push(data[i]);
+        filteredData.push(data[i]);
       }
     }
-    return filtredData;
+    return filteredData;
   }
 
   return data;
@@ -138,16 +138,16 @@ function checkParking(data) {
 function checkWasher(data) {
 
   if (mapFeaturesWasher.checked) {
-    filtredData = [];
+    filteredData = [];
 
     for (let i = 0; i < Math.min(data.length, MAX_COUNT_ADS); i++) {
       if (data[i].offer.features.some((value) => {
         return value === 'washer';
       })) {
-        filtredData.push(data[i]);
+        filteredData.push(data[i]);
       }
     }
-    return filtredData;
+    return filteredData;
   }
 
   return data;
@@ -155,16 +155,16 @@ function checkWasher(data) {
 }
 function checkElevator(data) {
   if (mapFeaturesElevator.checked) {
-    filtredData = [];
+    filteredData = [];
 
     for (let i = 0; i < Math.min(data.length, MAX_COUNT_ADS); i++) {
       if (data[i].offer.features.some((value) => {
         return value === 'elevator';
       })) {
-        filtredData.push(data[i]);
+        filteredData.push(data[i]);
       }
     }
-    return filtredData;
+    return filteredData;
   }
 
   return data;
@@ -172,16 +172,16 @@ function checkElevator(data) {
 }
 function checkConditioner(data) {
   if (mapFeaturesConditioner.checked) {
-    filtredData = [];
+    filteredData = [];
 
     for (let i = 0; i < Math.min(data.length, MAX_COUNT_ADS); i++) {
       if (data[i].offer.features.some((value) => {
         return value === 'conditioner';
       })) {
-        filtredData.push(data[i]);
+        filteredData.push(data[i]);
       }
     }
-    return filtredData;
+    return filteredData;
   }
 
   return data;
@@ -196,21 +196,21 @@ function checkType(data) {
 
   for (let i = 0; i < data.length; i++) {
     if (data[i].offer.type === filterType.value) {
-      filtredData.push(data[i]);
+      filteredData.push(data[i]);
       count++;
     }
     if (count >= MAX_COUNT_ADS) {
-      return filtredData;
+      return filteredData;
     }
   }
 
-  return filtredData;
+  return filteredData;
 
 }
 
 function checkPrices(data) {
 
-  filtredData = [];
+  filteredData = [];
 
   if (filterPrice.value === 'any') {
 
@@ -219,14 +219,14 @@ function checkPrices(data) {
   for (let i = 0; i < data.length; i++) {
 
     if (data[i].offer.price >= PRICES[filterPrice.value].min && data[i].offer.price < PRICES[filterPrice.value].max) {
-      filtredData.push(data[i]);
+      filteredData.push(data[i]);
     }
   }
-  return filtredData;
+  return filteredData;
 }
 
 function checkRooms(data) {
-  filtredData = [];
+  filteredData = [];
   let count = 0;
 
   if (filterRooms.value === 'any') 
@@ -238,19 +238,19 @@ function checkRooms(data) {
 
     if (data[i].offer.rooms === Number(filterRooms.value)) {
 
-      filtredData.push(data[i]);
+      filteredData.push(data[i]);
       count++;
     }
     if (count >= MAX_COUNT_ADS) {
-      return filtredData;
+      return filteredData;
     }
   }
 
-  return filtredData;
+  return filteredData;
 }
 
 function checkGuests(data) {
-  filtredData = [];
+  filteredData = [];
   let count = 0;
 
   if (filterGuests.value === 'any') 
@@ -261,15 +261,15 @@ function checkGuests(data) {
   for (let i = 0; i < data.length; i++) {
     if (data[i].offer.guests === Number(filterGuests.value)) {
 
-      filtredData.push(data[i]);
+      filteredData.push(data[i]);
       count++;
     }
     if (count >= MAX_COUNT_ADS) {
-      return filtredData;
+      return filteredData;
     }
 
   }
-  return filtredData;
+  return filteredData;
 }
 
 function resetFilters() {
