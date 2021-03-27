@@ -53,7 +53,7 @@ const address = document.querySelector('#address');
 
 function writeLatLng(coordinate) {
 
-  address.value = coordinate.lat.toFixed(COORDINATE_PRECISION) + ' - ' + coordinate.lng.toFixed(COORDINATE_PRECISION);
+  address.value = coordinate.lat.toFixed(COORDINATE_PRECISION) + ', ' + coordinate.lng.toFixed(COORDINATE_PRECISION);
 }
 
 // Количество комнат +++++++++++++++++++++++++++++++++++++++++

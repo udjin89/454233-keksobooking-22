@@ -49,14 +49,14 @@ function showMessage(type, textMessage) {
 
   switch (type) {
     case 'success':
-      successNode.style.zIndex = 1000;
+      successNode.style.zIndex = '1000';
       if (textMessage) successMessageText.textContent = textMessage;
       currentMessage = mainArea.appendChild(successNode);
       window.addEventListener('keydown', onEscKeydown);
       window.addEventListener('click', onOverlayClick);
       break;
     case 'error':
-      errorNode.style.zIndex = 1000;
+      errorNode.style.zIndex = '1000';
       if (textMessage) errorMessageText.textContent = textMessage;
       currentMessage = mainArea.appendChild(errorNode);
       window.addEventListener('keydown', onEscKeydown);
